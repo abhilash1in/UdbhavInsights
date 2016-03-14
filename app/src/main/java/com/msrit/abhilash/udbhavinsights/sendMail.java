@@ -21,11 +21,12 @@ import javax.ws.rs.core.MediaType;
 public class sendMail extends AsyncTask<String,Void, ClientResponse>{
 
     String e;
-
+    String emailBody;
     Context context;
-    public sendMail(Context context, String e) {
+    public sendMail(Context context, String e,String emailBody) {
         this.e=e;
         this.context = context;
+        this.emailBody = emailBody;
     }
 
     @Override
@@ -46,7 +47,7 @@ public class sendMail extends AsyncTask<String,Void, ClientResponse>{
             formData.add("to",e);
             formData.add("to","reg.udbhav16@gmail.com");
             formData.add("subject", "Udbhav 2016 Registration Confirmation");
-            formData.add("text", "Testing some Udbhav awesomness!");
+            formData.add("text", emailBody);
             return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
                     post(ClientResponse.class, formData);
         }
