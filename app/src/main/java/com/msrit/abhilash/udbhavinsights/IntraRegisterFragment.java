@@ -43,7 +43,7 @@ import java.util.List;
 /**
  * Created by Abhilash on 13/03/2016.
  */
-public class RegisterFragment extends android.support.v4.app.Fragment {
+public class IntraRegisterFragment extends android.support.v4.app.Fragment {
 
     Button register;
     EditText name,usn,college,phone,email;
@@ -65,7 +65,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
 
 
 
-    public RegisterFragment() {
+    public IntraRegisterFragment() {
     }
 
     @Override
@@ -107,6 +107,9 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             }
         });
         college = (EditText) view.findViewById(R.id.college);
+        college.setText("MSRIT");
+        college.setEnabled(false);
+        college.setFocusable(false);
         usn = (EditText) view.findViewById(R.id.usn);
         phone = (EditText) view.findViewById(R.id.phone);
         email = (EditText) view.findViewById(R.id.email);
@@ -135,7 +138,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             while (it2.hasNext())
             {
                 final ItemData id2= it2.next();
-                if(id2.getParticularEvent()!=null&&id2.isInter())
+                if(id2.getParticularEvent()!=null&&(!id2.isInter()))
                 {
                     CheckBox cb = new CheckBox(getContext());
                     cb.setText(id2.getTitle());

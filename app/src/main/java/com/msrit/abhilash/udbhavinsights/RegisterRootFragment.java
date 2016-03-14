@@ -1,10 +1,12 @@
 package com.msrit.abhilash.udbhavinsights;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,14 +37,40 @@ public class RegisterRootFragment extends Fragment {
             if(user.getBoolean("reg_auth"))
             {
                 tv.setVisibility(View.GONE);
-                FragmentTransaction transaction = getFragmentManager()
-                        .beginTransaction();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Registration Type");
+                builder.setPositiveButton("INTER", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FragmentTransaction transaction = getFragmentManager()
+                                .beginTransaction();
 		/*
 		 * When this container fragment is created, we fill it with our first
 		 * "real" fragment
 		 */
-                transaction.replace(R.id.register_frame, new RegisterFragment());
-                transaction.commit();
+                        transaction.replace(R.id.register_frame, new RegisterFragment());
+                        transaction.commit();
+
+                    }
+                });
+                builder.setNegativeButton("INTRA", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FragmentTransaction transaction = getFragmentManager()
+                                .beginTransaction();
+		/*
+		 * When this container fragment is created, we fill it with our first
+		 * "real" fragment
+		 */
+                        transaction.replace(R.id.register_frame, new IntraRegisterFragment());
+                        transaction.commit();
+
+                    }
+                });
+                builder.show();
+
+
             }
         }
 

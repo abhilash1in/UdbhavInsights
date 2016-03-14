@@ -100,46 +100,6 @@
                 />
         </android.support.design.widget.TextInputLayout>
 
-
-        <!--<CheckBox
-            android:id="@+id/event1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="test"
-            />
-
-        <EditText
-            android:id="@+id/tvForm1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
-        <CheckBox
-            android:id="@+id/event2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="test"
-            />
-
-        <EditText
-            android:id="@+id/tvForm2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
-        <CheckBox
-            android:id="@+id/event3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="test"
-            />
-
-        <EditText
-            android:id="@+id/tvForm3"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>-->
-
-
-
         <LinearLayout
             android:id="@+id/list"
             android:layout_width="match_parent"

@@ -31,7 +31,6 @@ public class register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        /*getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);*/
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -94,8 +93,6 @@ public class register extends AppCompatActivity {
                 user.put("phone", phone);
                 user.put("reg_auth",false);
                 user.put("push_auth",false);
-                /*user.put("balance",0);*/
-
 
                 ParseQuery<ParseUser> query = ParseUser.getQuery();
                 query.whereEqualTo("username", id);
@@ -104,16 +101,12 @@ public class register extends AppCompatActivity {
                     public void done(List<ParseUser> parseUsers, ParseException e) {
 
                         if (e == null) {
-                            // Successful Query
 
-                            // User already exists ?
                             if (parseUsers.size() > 0) {
                                 Toast toast = Toast.makeText(getApplicationContext(), "User already exists", Toast.LENGTH_SHORT);
                                 toast.show();
                             } else {
-                                // No user found, so signup
-                                /*Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();*/
+
                                 signupUser(user);
 
 
@@ -139,31 +132,13 @@ public class register extends AppCompatActivity {
 
     private void signupUser(ParseUser user) {
 
-        /*final ParseObject att = new ParseObject("attendance");
-        att.put("user",user);
-        *//*att.add("values", {});*//*
-        att.put("nameSort",user.getString("name").toLowerCase());*/
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
                 if(progress!=null)
                     progress.dismiss();
                 if (e == null) {
-                    /*balance.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            // Signup successful!
-                            AlertDialog.Builder builder = new AlertDialog.Builder(register.this);
-                            builder.setMessage("You've signed up successfully")
-                                    .setTitle("Success!")
-                                    .setPositiveButton(android.R.string.ok, null);
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                            navigateToHome();
-                        }
-                    });*/
 
-                    /*att.saveInBackground();*/
                     // Signup successful!
                     AlertDialog.Builder builder = new AlertDialog.Builder(register.this);
                     builder.setMessage("You've signed up successfully")

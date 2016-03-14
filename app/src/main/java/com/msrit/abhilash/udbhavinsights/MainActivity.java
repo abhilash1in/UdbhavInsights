@@ -33,8 +33,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.msrit.abhilash.udbhavinsights.TakeAttendance.FetchData;
-import com.msrit.abhilash.udbhavinsights.TakeAttendance.Test;
 import com.parse.FunctionCallback;
 import com.parse.LogOutCallback;
 import com.parse.Parse;
@@ -136,23 +134,6 @@ public class MainActivity extends AppCompatActivity {
                         Intent i = this.getPackageManager().getLaunchIntentForPackage(uriString);
                         startActivity(i);
                     }
-                    /*
-                    //for opening a website
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(uriString));
-                    startActivity(i);
-                    */
-
-                    /*
-                    //for opening another app
-                    Intent i = this.getPackageManager().getLaunchIntentForPackage(uriString);
-                    startActivity(i);*/
-
-                    /*
-                    //for opening another activity within the app
-                    Class cls = Class.forName(uriString);
-                    Intent i = new Intent(this, cls);
-                    startActivity(i);*/
                 }
                 else
                 {
@@ -194,25 +175,13 @@ public class MainActivity extends AppCompatActivity {
         else if (id == R.id.action_settings) {
             return true;
         }
-        else if (id == R.id.action_fetch) {
-            fetch();
-            return true;
-        }
-        else if (id == R.id.action_takeAtt) {
-            Intent intent = new Intent(MainActivity.this,Test.class);
-            startActivity(intent);
-            return true;
-        }
         else if (id == R.id.action_push) {
             push();
             return true;
         }
         else if (id == R.id.action_results) {
+            //todo add results upload feature
             Toast.makeText(MainActivity.this, "Coming soon!", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        else if (id == R.id.action_save) {
-            FetchData.update(this);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -244,19 +213,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void fetch()
-    {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        if(activeNetworkInfo != null && activeNetworkInfo.isConnected()){
-            FetchData.saveToLocal(this);
-        }
-        else {
-                /*FetchData.fetchFromLocal(this);*/
-            Log.v("test", "no internet");
-        }
-    }
-
     private void push()
     {
 
@@ -266,36 +222,6 @@ public class MainActivity extends AppCompatActivity {
         chooserDialog.setTitle("Select");
         dialogPush.setTitle("Send push notification");
         dialogMeet.setTitle("Call a meet");
-
-            /*LinearLayout layout = new LinearLayout(this);
-            layout.setOrientation(LinearLayout.VERTICAL);
-
-            final EditText titleBox = new EditText(this);
-            titleBox.setHint("Title");
-            titleBox.setSingleLine(true);
-            titleBox.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-            layout.addView(titleBox);
-
-            final EditText descriptionBox = new EditText(this);
-            descriptionBox.setHint("Description");
-            descriptionBox.setSingleLine(true);
-            descriptionBox.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-            layout.addView(descriptionBox);
-
-            hint = "http:// (optional) (dont edit if not used)";
-
-            final EditText uriBox = new EditText(this);
-            uriBox.setText(hint);
-            uriBox.setSingleLine(true);
-            uriBox.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-            layout.addView(uriBox);
-
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
-            lp.setMargins(10, 10, 10, 10);
-
-            titleBox.setLayoutParams(lp);
-            descriptionBox.setLayoutParams(lp);
-            uriBox.setLayoutParams(lp);*/
 
         final LayoutInflater inflater = this.getLayoutInflater();
 
@@ -383,46 +309,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         chooserDialog.show();
-
-            /*LayoutInflater inflater = this.getLayoutInflater();
-            dialog.setView(inflater.inflate(R.layout.push_menu, null));
-            final TextView titleBox = (TextView) findViewById(R.id.title);
-            final TextView descriptionBox = (TextView) findViewById(R.id.description);
-            final TextView uriBox = (TextView) findViewById(R.id.uri);*/
-            /*dialog.setView(layout);*/
-            /*dialog.setPositiveButton("Send", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    HashMap<String, String> params = new HashMap<>();
-                    params.put("title", titleBox.getText().toString());
-                    params.put("content", descriptionBox.getText().toString());
-                    if (!uriBox.getText().toString().equals(hint)) {
-                        Log.v("test", "uri entered");
-                        params.put("uri", uriBox.getText().toString());
-                    } else {
-                        Log.v("test", "no uri entered");
-                    }
-                    ParseCloud.callFunctionInBackground("notify", params, new FunctionCallback<Integer>() {
-                        @Override
-                        public void done(Integer integer, ParseException e) {
-                            if (e == null) {
-                                if (integer == 1)
-                                    Log.v("test", "push sent");
-                                else
-                                    Log.v("test", "push status unsure, response: " + integer);
-                            } else
-                                Log.v("test", "push unsuccessful");
-                        }
-                    });
-                }
-            });
-            dialog.setNegativeButton("Calcel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    *//*dialog.dismiss();*//*
-                }
-            });
-            dialog.show();*/
     }
 
     public class SlidePagerAdapter extends FragmentPagerAdapter {
@@ -438,10 +324,9 @@ public class MainActivity extends AppCompatActivity {
 			 */
             if (position == 0)
                 return new RegisterRootFragment();
-            else if(position == 1)
-                return new announcements();
             else
-                return new attendance();
+                return new announcements();
+
         }
 
         @Override
@@ -452,12 +337,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             if(position==0)
-                return "Meets";
-            else if(position==1)
+                return "Registration";
+            else
                 return "Notifs";
-            else if(position==2)
-                return "Attendance";
-            return "Heading";
 
         }
 

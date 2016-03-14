@@ -16,10 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.msrit.abhilash.udbhavinsights.TakeAttendance.MyAdapter2;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -29,7 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by Abhilash on 05/02/2016.
@@ -60,12 +57,7 @@ public class announcements extends Fragment {
 
         final View root = inflater.inflate(R.layout.fragment_announcements, container, false);
         mSwipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeRefreshLayout);
-        /*myDataset.add(new notificationItem("tite1","content1 \n content \n content"));
-        myDataset.add(new notificationItem("tite2","content2"));
-        myDataset.add(new notificationItem("tite3","content3"));
-        myDataset.add(new notificationItem("tite4","content4"));
-        myDataset.add(new notificationItem("tite5","content5"));
-        myDataset.add(new notificationItem("tite6","content6"));*/
+
 
         mRecyclerView = (RecyclerView) root.findViewById(R.id.notifs_recycler_view);
 
@@ -93,11 +85,7 @@ public class announcements extends Fragment {
 
     public static void fetch(Context context) {
         if (isNetworkAvailable(context)) {
-            /*final ProgressDialog progress = new ProgressDialog(context);
-            progress.setTitle("Loading");
-            progress.setMessage("Wait while loading...");
-            progress.setCancelable(false);
-            progress.show();*/
+
             sDate = prefs.getString("last_fetched", null);
             local_size = prefs.getInt("size", 0);
 
@@ -113,7 +101,6 @@ public class announcements extends Fragment {
             query.findInBackground(new FindCallback<ParseObject>() {
                 @Override
                 public void done(List<ParseObject> list, ParseException e) {
-                    /*progress.dismiss();*/
                     if (list != null) {
                         Log.v("test fetch", list.size() + "");
                     }
