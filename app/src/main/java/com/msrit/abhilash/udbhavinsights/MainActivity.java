@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,42 +16,26 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.parse.FunctionCallback;
 import com.parse.LogOutCallback;
-import com.parse.Parse;
-import com.parse.ParseAnalytics;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
+import com.parse.SaveCallback;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import java.net.MalformedURLException;
 import java.util.HashMap;
-
-import javax.ws.rs.core.MediaType;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     public String hint,uriString;
     ParseUser user;
     ProgressDialog progress;
+    EditText res1,res2,res3,res4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,19 +157,40 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         else if (id == R.id.action_settings) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("About");
+            builder.setMessage("Version"+R.string.version+"\n Release Date:"+R.string.releaseDate);
             return true;
         }
         else if (id == R.id.action_push) {
-            push();
+            if(user.getBoolean("push_auth"))
+            {
+                if(isNetworkAvailable())
+                    push();
+                else
+                    Toast.makeText(MainActivity.this, "Not connected to the internet", Toast.LENGTH_SHORT).show();
+            }
+            else
+                Toast.makeText(MainActivity.this, "Un-authorized to send push notifications", Toast.LENGTH_SHORT).show();
             return true;
         }
         else if (id == R.id.action_results) {
-            //todo add results upload feature
-            Toast.makeText(MainActivity.this, "Coming soon!", Toast.LENGTH_SHORT).show();
+
+            if(user.getBoolean("results_auth"))
+            {
+                if(isNetworkAvailable())
+                    uploadResults();
+                else
+                    Toast.makeText(MainActivity.this, "Not connected to the internet", Toast.LENGTH_SHORT).show();
+            }
+            else
+                Toast.makeText(MainActivity.this, "Un-authorized to upload results", Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
     private void logout()
     {
@@ -199,18 +204,70 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 progress.dismiss();
-                if(e==null)
-                {
+                if (e == null) {
                     Toast.makeText(MainActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
                     goToLogin();
-                }
-                else
-                {
+                } else {
                     Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
+    }
+
+    private void uploadResults()
+    {
+        final LayoutInflater inflater = this.getLayoutInflater();
+
+        final AlertDialog.Builder resulsDialog = new AlertDialog.Builder(this);
+        View v = inflater.inflate(R.layout.results_menu, null);
+        resulsDialog.setView(v);
+        res1 = (EditText) v.findViewById(R.id.eve);
+        res2 = (EditText) v.findViewById(R.id.firstPlace);
+        res3 = (EditText) v.findViewById(R.id.secondPlace);
+        res4 = (EditText) v.findViewById(R.id.thirdPlace);
+
+        resulsDialog.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                final ProgressDialog d = new ProgressDialog(MainActivity.this);
+                d.setMessage("Uploading results...");
+                d.show();
+
+                ParseObject result = new ParseObject("results");
+                result.put("event_name",res1.getText().toString());
+                result.put("first",res2.getText().toString());
+                result.put("second",res3.getText().toString());
+                result.put("third", res4.getText().toString());
+
+                result.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        d.dismiss();
+                        if(e==null)
+                        {
+                            Toast.makeText(MainActivity.this, "Result uploaded successfully", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(MainActivity.this, "Result uploading failed", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+                });
+            }
+        });
+
+        resulsDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        resulsDialog.show();
+
     }
 
     private void push()
@@ -352,5 +409,12 @@ public class MainActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

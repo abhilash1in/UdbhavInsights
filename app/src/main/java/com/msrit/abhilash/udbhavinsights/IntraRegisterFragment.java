@@ -43,7 +43,7 @@ import java.util.List;
 /**
  * Created by Abhilash on 13/03/2016.
  */
-public class RegisterFragment extends android.support.v4.app.Fragment {
+public class IntraRegisterFragment extends android.support.v4.app.Fragment {
 
     Button register;
     EditText name,usn,college,phone,email;
@@ -68,7 +68,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
 
 
 
-    public RegisterFragment() {
+    public IntraRegisterFragment() {
     }
 
     @Override
@@ -84,7 +84,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                 .inflate(R.layout.register2, container, false);
 
         reg_type = (TextView) view.findViewById(R.id.registration_type);
-        reg_type.setText("Inter College Registration");
+        reg_type.setText("Intra College Registration");
         name = (EditText) view.findViewById(R.id.name);
         name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -102,6 +102,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
 
                 for(int i=0;i<mainNameIndex.size();i++)
                 {
+                    Log.v("mainname",""+mainNameIndex.get(i));
                     allets.get(mainNameIndex.get(i)).setText(s.toString());
                     allets.get(mainNameIndex.get(i)).setEnabled(false);
                     allets.get(mainNameIndex.get(i)).setFocusable(false);
@@ -111,6 +112,10 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             }
         });
         college = (EditText) view.findViewById(R.id.college);
+            college.setText("MSRIT");
+            college.setEnabled(false);
+            college.setFocusable(false);
+            college.setTextColor(Color.parseColor("#000000"));
         usn = (EditText) view.findViewById(R.id.usn);
         phone = (EditText) view.findViewById(R.id.phone);
         email = (EditText) view.findViewById(R.id.email);
@@ -139,7 +144,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             while (it2.hasNext())
             {
                 final ItemData id2= it2.next();
-                if(id2.getParticularEvent()!=null&&(id2.isInter()))
+                if(id2.getParticularEvent()!=null)
                 {
                     CheckBox cb = new CheckBox(getContext());
                     cb.setText(id2.getTitle());
@@ -158,9 +163,13 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if (!isChecked) {
+                                Log.v("amount",""+amt);
+                                Log.v("amount",""+id2.getAmt());
                                 amt-=id2.getAmt();
                                 etll.setVisibility(View.GONE);
                             } else {
+                                Log.v("amount",""+amt);
+                                Log.v("amount",""+id2.getAmt());
                                 amt+=id2.getAmt();
                                 etll.setVisibility(View.VISIBLE);
                                 etll.requestFocus();
@@ -312,7 +321,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                 ArrayList<String> participants = new ArrayList<>();
                 try
                 {
-                    /*Log.v("test", allcbs.get(i).getText().toString());*/
+                    Log.v("test", allcbs.get(i).getText().toString());
 
                     if (i == 0) {
                         for (int k = 0; k < table.get(i); k++) {
@@ -320,17 +329,17 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
 
                                 names.put(allets.get(k).getText().toString());
                                 participants.add(allets.get(k).getText().toString());
-                                /*Log.v("test", allets.get(k).getText().toString());*/
+                                Log.v("test", allets.get(k).getText().toString());
                             }
                         }
                     } else {
-                        /*Log.v("test", "1. " + (table.get(i - 1)) + "  2. " + table.get(i));*/
+                        Log.v("test", "1. " + (table.get(i - 1)) + "  2. " + table.get(i));
                         for (int j = table.get(i - 1); j < table.get(i); j++) {
                             if (allets.get(j) != null && allets.get(j).getText().toString() != "" && allets.get(j).getText().toString() != null) {
 
                                 names.put(allets.get(j).getText().toString());
                                 participants.add(allets.get(j).getText().toString());
-                                /*Log.v("test", allets.get(j).getText().toString());*/
+                                Log.v("test", allets.get(j).getText().toString());
                             }
                         }
                     }
@@ -366,7 +375,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             reg_data.put("events", allevents);
             reg_data.put("amount", amt);
             reg_data.put("submitted_by", pu.getString("name"));
-            /*Log.v("json", reg_data.toString(4));*/
+            Log.v("json", reg_data.toString(4));
         }catch (JSONException e)
         {
             if(dialog!=null)
@@ -393,7 +402,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
 
     void compute()
     {
-        /*Log.v("test", "computed!!");*/
+        Log.v("test", "computed!!");
         for(int i=1;i<table.size();i++)
         {
             table.set(i,table.get(i)+table.get(i-1));

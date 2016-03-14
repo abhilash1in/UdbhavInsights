@@ -93,6 +93,7 @@ public class register extends AppCompatActivity {
                 user.put("phone", phone);
                 user.put("reg_auth",false);
                 user.put("push_auth",false);
+                user.put("results_auth",false);
 
                 ParseQuery<ParseUser> query = ParseUser.getQuery();
                 query.whereEqualTo("username", id);

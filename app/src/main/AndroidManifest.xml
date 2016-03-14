@@ -41,39 +41,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".TakeAttendance.Test"
-            android:theme="@style/Base.Theme.AppCompat">
-            <intent-filter>
-                <action android:name="com.msrit.abhilash.udbhavinsights.TakeAttendance.Test" />
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-
-        <!--<service android:name="com.parse.PushService" />
-        <receiver android:name="com.parse.ParsePushBroadcastReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.parse.push.intent.RECEIVE" />
-                <action android:name="com.parse.push.intent.DELETE" />
-                <action android:name="com.parse.push.intent.OPEN" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name="com.parse.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                &lt;!&ndash;
-                  IMPORTANT: Change "com.parse.starter" to match your app's package name.
-                &ndash;&gt;
-                <category android:name="com.msrit.abhilash.udbhavinsights" />
-            </intent-filter>
-        </receiver>-->
-
         <service android:name="com.parse.PushService" />
         <receiver android:name="com.msrit.abhilash.udbhavinsights.MyReceiver"
             android:exported="false">
@@ -96,7 +63,7 @@
             </intent-filter>
         </receiver>
 
-        <meta-data android:name="com.parse.push.notification_icon" android:resource="@mipmap/push_icon2"/>
+        <meta-data android:name="com.parse.push.notification_icon" android:resource="@mipmap/push_icon3"/>
     </application>
 
 </manifest>

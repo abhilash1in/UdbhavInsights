@@ -47,7 +47,7 @@ public class sendMail extends AsyncTask<String,Void, ClientResponse>{
             formData.add("to",e);
             formData.add("to","reg.udbhav16@gmail.com");
             formData.add("subject", "Udbhav 2016 Registration Confirmation");
-            formData.add("text", emailBody);
+            formData.add("html", emailBody);
             return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
                     post(ClientResponse.class, formData);
         }

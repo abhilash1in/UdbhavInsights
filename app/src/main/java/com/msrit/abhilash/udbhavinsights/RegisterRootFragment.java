@@ -34,8 +34,7 @@ public class RegisterRootFragment extends Fragment {
 
         if(user!=null)
         {
-            if(user.getBoolean("reg_auth"))
-            {
+            if(user.getBoolean("reg_auth")) {
                 tv.setVisibility(View.GONE);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -43,17 +42,22 @@ public class RegisterRootFragment extends Fragment {
                 builder.setPositiveButton("INTER", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        RegisterFragment.inter=true;
-                        fragment_transaction();
+                        FragmentTransaction transaction = getFragmentManager()
+                                .beginTransaction();
+                        transaction.replace(R.id.register_frame, new RegisterFragment());
+                        transaction.commit();
                     }
                 });
                 builder.setNegativeButton("INTRA", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        RegisterFragment.inter=false;
-                        fragment_transaction();
+                        FragmentTransaction transaction = getFragmentManager()
+                                .beginTransaction();
+                        transaction.replace(R.id.register_frame, new IntraRegisterFragment());
+                        transaction.commit();
                     }
                 });
+                builder.setCancelable(false);
                 builder.show();
 
 
@@ -72,13 +76,5 @@ public class RegisterRootFragment extends Fragment {
         });
 
         return view;
-    }
-
-    void fragment_transaction()
-    {
-        FragmentTransaction transaction = getFragmentManager()
-                .beginTransaction();
-        transaction.replace(R.id.register_frame, new RegisterFragment());
-        transaction.commit();
     }
 }
