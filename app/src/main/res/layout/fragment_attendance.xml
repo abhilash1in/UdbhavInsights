@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+        <TextView
+            android:id="@+id/percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="100sp"
+            android:text="0%"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/attended"
+            android:layout_below="@id/percent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No. of meets attended: "
+                android:layout_alignParentLeft="true"
+                android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/attendedNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text=""
+            android:textSize="24sp"/>
+        </RelativeLayout>
+        <View
+            android:id="@+id/space"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_below="@id/attended"/>
+        <RelativeLayout
+            android:layout_below="@id/space"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/held">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No. of meets held: "
+                android:layout_alignParentLeft="true"
+                android:textSize="24sp"/>
+            <TextView
+                android:id="@+id/heldNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text=""
+                android:textSize="24sp"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</ScrollView>

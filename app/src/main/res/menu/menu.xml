@@ -1,0 +1,46 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <item android:id="@+id/action_search"
+        android:title="search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        android:orderInCategory="99"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_results"
+        android:title="Upload Result"
+        android:orderInCategory="1"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_fetch"
+        android:title="Fetch Data"
+        android:orderInCategory="2"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_takeAtt"
+        android:title="Take Attendance"
+        android:orderInCategory="3"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_save"
+        android:title="Save"
+        android:orderInCategory="4"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_push"
+        android:title="Push"
+        android:orderInCategory="5"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+</menu>

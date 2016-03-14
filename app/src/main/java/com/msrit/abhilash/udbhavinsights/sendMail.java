@@ -1,0 +1,66 @@
+package com.msrit.abhilash.udbhavinsights;
+
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
+
+import javax.ws.rs.core.MediaType;
+
+/**
+ * Created by Abhilash on 13/03/2016.
+ */
+public class sendMail extends AsyncTask<String,Void, ClientResponse>{
+
+    String e;
+
+    Context context;
+    public sendMail(Context context, String e) {
+        this.e=e;
+        this.context = context;
+    }
+
+    @Override
+    protected ClientResponse doInBackground(String... params) {
+        Client client = Client.create();
+        client.addFilter(new HTTPBasicAuthFilter("api",
+                "key-cba8a0cb565dc4a9bfef0f1713c67fdd"));
+        WebResource webResource =
+                client.resource("https://api.mailgun.net/v3/msritevents.in" +
+                        "/messages");
+        MultivaluedMapImpl formData = new MultivaluedMapImpl();
+        formData.add("o:skip-verification",true);
+        formData.add("from", "Udbhav 2016 <udbhav@msritevents.in>");
+        formData.add("h:Reply-To","abhilash1in@gmail.com");
+        formData.add("to",params[0]);
+        formData.add("to",e);
+        formData.add("to","reg.udbhav16@gmail.com");
+        formData.add("subject", "Udbhav 2016 Registration Confirmation");
+        formData.add("text", "Testing some Udbhav awesomness!");
+        return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
+                post(ClientResponse.class, formData);
+    }
+
+    @Override
+    protected void onPostExecute(ClientResponse clientResponse) {
+        super.onPostExecute(clientResponse);
+
+
+        if(clientResponse.getStatus()==200)
+        {
+            Toast.makeText(context, "Confirmation e-mail sent successfully", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(context, "ERROR! E-mail not sent", Toast.LENGTH_SHORT).show();
+        }
+
+        Log.v("test", ""+clientResponse.getStatus());
+    }
+}

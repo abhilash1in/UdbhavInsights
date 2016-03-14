@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
+
+
+            <!--<TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Push Notification:"
+                android:textSize="20dp"
+                android:textColor="@color/colorPrimary"/>-->
+
+            <EditText
+                android:id="@+id/title_push"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Title"
+                android:singleLine="true"
+                android:inputType="text|textNoSuggestions|textCapSentences"
+                android:layout_margin="10dp"/>
+            <EditText
+                android:id="@+id/description_push"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Content"
+                android:inputType="text|textNoSuggestions|textCapSentences"
+                android:layout_margin="10dp"/>
+            <EditText
+                android:id="@+id/uri_push"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="http:// (optional) (dont edit if not used)"
+                android:singleLine="true"
+                android:inputType="text|textNoSuggestions|textCapSentences"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
