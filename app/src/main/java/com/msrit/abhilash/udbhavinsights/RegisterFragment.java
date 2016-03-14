@@ -62,6 +62,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
     ArrayList<ParseObject> eventsData = new ArrayList<>();
     ArrayList<Integer> mainNameIndex = new ArrayList<>();
     /*ArrayList<String> classNamesForArjun = new ArrayList<>();*/
+    public static boolean inter = true;
 
 
 
@@ -107,6 +108,13 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             }
         });
         college = (EditText) view.findViewById(R.id.college);
+        if(inter=false)
+        {
+            college.setText("MSRIT");
+            college.setEnabled(false);
+            college.setFocusable(false);
+            college.setTextColor(Color.parseColor("#000000"));
+        }
         usn = (EditText) view.findViewById(R.id.usn);
         phone = (EditText) view.findViewById(R.id.phone);
         email = (EditText) view.findViewById(R.id.email);
@@ -135,7 +143,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             while (it2.hasNext())
             {
                 final ItemData id2= it2.next();
-                if(id2.getParticularEvent()!=null&&id2.isInter())
+                if(id2.getParticularEvent()!=null&&(id2.isInter()==inter))
                 {
                     CheckBox cb = new CheckBox(getContext());
                     cb.setText(id2.getTitle());
@@ -220,7 +228,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
         dialog.show();
 
 
-        String id= RandomStringUtils.randomAlphanumeric(6).toUpperCase();
+        String id= RandomStringUtils.randomAlphanumeric(8).toUpperCase();
         JSONObject reg_data = new JSONObject();
         JSONArray allevents = new JSONArray();
 

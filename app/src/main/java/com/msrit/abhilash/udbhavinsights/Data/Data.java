@@ -102,8 +102,8 @@ public class Data {
         DanceEvents.add(new ItemData("Indian Group Dance",R.mipmap.icon2,getDanceEvent2Data(),true,800));
         DanceEvents.add(new ItemData("Western Group Dance",R.mipmap.icon2,getDanceEvent3Data(),true,1000));
         DanceEvents.add(new ItemData("Street Dance 3x3",  R.mipmap.icon2,getDanceEvent4Data(),true,500));
-        DanceEvents.add(new ItemData("Street Dance 2x2",  R.mipmap.icon2,getDanceEvent4Data(),true,300));
-        DanceEvents.add(new ItemData("Street Dance 7 to smoke",  R.mipmap.icon2,getDanceEvent4Data(),true,150));
+        DanceEvents.add(new ItemData("Street Dance 2x2",  R.mipmap.icon2,getDanceEvent5Data(),true,300));
+        DanceEvents.add(new ItemData("Street Dance 7 to smoke",  R.mipmap.icon2,getDanceEvent6Data(),true,150));
         DanceEvents.add(new ItemData("Intra-College events",0,null,false,0));
         DanceEvents.add(new ItemData("Classical Dance Solo", R.mipmap.icon2,getDanceEvent0Data(),false,0));
         return DanceEvents;
@@ -318,7 +318,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Collage");
         Event0.setInter(true);
-        Event0.setSize(1);
+        Event0.setSize(2);
         Event0.setDate("31/03/2016 (day 2)");
         Event0.setTime("01:00 pm");
         Event0.setVenue("LHC stage");
@@ -357,7 +357,7 @@ public class Data {
     {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Rangoli");
-        Event0.setSize(1);
+        Event0.setSize(2);
         Event0.setDate("31/03/2016 (day 2)");
         Event0.setTime("09:00 am");
         Event0.setVenue("ESB 2 basement");
@@ -371,7 +371,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Face Painting");
         Event0.setInter(true);
-        Event0.setSize(1);
+        Event0.setSize(2);
         Event0.setDate("31/03/2016 (day 2)");
         Event0.setTime("09:00 am");
         Event0.setVenue("Amphi Theatre");
@@ -384,7 +384,7 @@ public class Data {
     {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Mehendi");
-        Event0.setSize(1);
+        Event0.setSize(2);
         Event0.setDate("30/03/2016 (day 1)");
         Event0.setTime("03:00 pm");
         Event0.setVenue("LHC Stage");
@@ -423,7 +423,7 @@ public class Data {
     {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Poster Making");
-        Event0.setSize(1);
+        Event0.setSize(2);
         Event0.setDate("30/03/2016 (day 1)");
         Event0.setTime("10:00 am");
         Event0.setVenue("ESB 2 Stage");
@@ -437,7 +437,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Western Group Music");
         Event0.setInter(true);
-        Event0.setSize(12);
+        Event0.setSize(12);     //todo doubt
         Event0.setDate(day3);
         Event0.setTime("12:00 pm");
         Event0.setVenue("Main Stage");
@@ -451,7 +451,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Indian Group Music");
         Event0.setInter(true);
-        Event0.setSize(6);  //todo findout 6 or 12
+        Event0.setSize(6);  //todo doubt
         Event0.setDate(day1);
         Event0.setTime("03:00 pm");
         Event0.setVenue("Main Stage");
@@ -465,7 +465,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Western Acoustics Solo");
         Event0.setInter(true);
-        Event0.setSize(1); //todo rules missing
+        Event0.setSize(1);
         Event0.setDate(day2);
         Event0.setTime("09:00 am");
         Event0.setVenue("Hi Tech Semminar Hall");
@@ -479,7 +479,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Western Acoustics Group");
         Event0.setInter(true);
-        Event0.setSize(3);  //todo rules missing
+        Event0.setSize(8);
         Event0.setDate(day2);
         Event0.setTime("01:00 pm");
         Event0.setVenue("Hi Tech Semminar Hall");
@@ -549,7 +549,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Beat Boxing");
         Event0.setInter(true);
-        Event0.setSize(1); //todo rules missing
+        Event0.setSize(1);
         Event0.setDate(day2);
         Event0.setTime("12:00 pm");
         Event0.setVenue("ESB 2 stage");
@@ -590,7 +590,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("One Act Play");
         Event0.setInter(true);
-        Event0.setSize(3);
+        Event0.setSize(12);
         Event0.setDate(day2);
         Event0.setTime("09:00 am");
         Event0.setVenue("Apex Block Auditorium");
@@ -604,7 +604,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Skit");
         Event0.setInter(true);
-        Event0.setSize(3);
+        Event0.setSize(9);
         Event0.setDate(day3);
         Event0.setTime("10:00 am");
         Event0.setVenue("ESB Small Seminar Hall");
@@ -618,7 +618,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Short Movies");
         Event0.setInter(true);
-        Event0.setSize(3);
+        Event0.setSize(1);
         Event0.setDate(day2);
         Event0.setTime("09:00 am");
         Event0.setVenue("ESB Small Seminar Hall");
@@ -632,7 +632,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Short Ads");
         Event0.setInter(true);
-        Event0.setSize(3);
+        Event0.setSize(1);
         Event0.setDate(day2);
         Event0.setTime("04:00 pm");
         Event0.setVenue("ESB Small Seminar Hall");
@@ -646,7 +646,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Street Play");
         Event0.setInter(true);
-        Event0.setSize(3); //todo rules missing
+        Event0.setSize(12);
         Event0.setDate(day3);
         Event0.setTime("03:00 pm");
         Event0.setVenue("Parking lot stage");
@@ -660,7 +660,7 @@ public class Data {
     {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Classical Dance Solo");
-        Event0.setSize(3);
+        Event0.setSize(1);
         Event0.setDate(day3);
         Event0.setTime("10:00 am");
         Event0.setVenue("Hi-Tech Seminar Hall");
@@ -688,7 +688,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Indian Group Dance");
         Event0.setInter(true);
-        Event0.setSize(12);
+        Event0.setSize(15);
         Event0.setDate(day2);
         Event0.setTime("10:00 am");
         Event0.setVenue("Main Stage");
@@ -714,9 +714,23 @@ public class Data {
     public static EventData getDanceEvent4Data()
     {
         EventData Event0 = new EventData();
-        Event0.setEvent_name("Street Dance");
+        Event0.setEvent_name("Street Dance 3x3");
         Event0.setInter(true);
-        Event0.setSize(10);
+        Event0.setSize(3);
+        Event0.setDate(day3);
+        Event0.setTime("11:00 am");
+        Event0.setVenue("Law canteen");
+        Event0.setCoordinator("Ankush Shetty");
+        Event0.setPhone("9686487110");
+        return Event0;
+    }
+
+    public static EventData getDanceEvent5Data()
+    {
+        EventData Event0 = new EventData();
+        Event0.setEvent_name("Street Dance 2x2");
+        Event0.setInter(true);
+        Event0.setSize(2);
         Event0.setDate(day3);
         Event0.setTime("11:00 am");
         Event0.setVenue("Law canteen");
@@ -726,11 +740,27 @@ public class Data {
     }
 
 
+    public static EventData getDanceEvent6Data()
+    {
+        EventData Event0 = new EventData();
+        Event0.setEvent_name("Street Dance 7 to smoke");
+        Event0.setInter(true);
+        Event0.setSize(1);
+        Event0.setDate(day3);
+        Event0.setTime("11:00 am");
+        Event0.setVenue("Law canteen");
+        Event0.setCoordinator("Ankush Shetty");
+        Event0.setPhone("9686487110");
+        return Event0;
+    }
+
+
+
     public static EventData getUdbCupEvent0Data()
     {
         EventData Event0 = new EventData();
-        Event0.setEvent_name("Movie Quiz");
-        Event0.setSize(3);
+        Event0.setEvent_name("Badminton");
+        Event0.setSize(1);  //todo doubt
         Event0.setDate("31/03/2016");
         Event0.setTime("09:00 am");
         Event0.setVenue("LHC Seminar Hall 2");
@@ -742,8 +772,8 @@ public class Data {
     public static EventData getUdbCupEvent1Data()
     {
         EventData Event0 = new EventData();
-        Event0.setEvent_name("Movie Quiz");
-        Event0.setSize(3);
+        Event0.setEvent_name("Basketball");
+        Event0.setSize(1);  //todo doubt
         Event0.setDate("31/03/2016");
         Event0.setTime("09:00 am");
         Event0.setVenue("LHC Seminar Hall 2");
@@ -755,8 +785,8 @@ public class Data {
     public static EventData getUdbCupEvent2Data()
     {
         EventData Event0 = new EventData();
-        Event0.setEvent_name("Movie Quiz");
-        Event0.setSize(3);
+        Event0.setEvent_name("Cricket");
+        Event0.setSize(1);  //todo doubt
         Event0.setDate("31/03/2016");
         Event0.setTime("09:00 am");
         Event0.setVenue("LHC Seminar Hall 2");
@@ -768,8 +798,8 @@ public class Data {
     public static EventData getUdbCupEvent3Data()
     {
         EventData Event0 = new EventData();
-        Event0.setEvent_name("Movie Quiz");
-        Event0.setSize(3);
+        Event0.setEvent_name("Football");
+        Event0.setSize(1);  //todo doubt
         Event0.setDate("31/03/2016");
         Event0.setTime("09:00 am");
         Event0.setVenue("LHC Seminar Hall 2");
@@ -783,7 +813,7 @@ public class Data {
     {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Personality");
-        Event0.setSize(3);
+        Event0.setSize(1);
         Event0.setDate(day1);
         Event0.setTime("10:00 am");
         Event0.setVenue("Pit Stop");
@@ -796,7 +826,7 @@ public class Data {
     {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Cooking");
-        Event0.setSize(3);
+        Event0.setSize(2);
         Event0.setDate(day3);
         Event0.setTime("09:00 am");
         Event0.setVenue("ESB 2 basement");
@@ -822,7 +852,7 @@ public class Data {
     {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Msrit’s Got Talent");
-        Event0.setSize(5);
+        Event0.setSize(1);
         Event0.setDate(day1);
         Event0.setTime("12:00 pm");
         Event0.setVenue("Main Stage");
@@ -836,7 +866,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("On The Spot Photography");
         Event0.setInter(true);
-        Event0.setSize(3);
+        Event0.setSize(1);
         Event0.setDate(day2);
         Event0.setTime("09:00 am");
         Event0.setVenue("Pit Stop");
@@ -850,7 +880,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Fifa 14");
         Event0.setInter(true);
-        Event0.setSize(3);
+        Event0.setSize(1);
         Event0.setDate(day2);
         Event0.setTime("11:00 am");
         Event0.setVenue("Lab, DES Block");

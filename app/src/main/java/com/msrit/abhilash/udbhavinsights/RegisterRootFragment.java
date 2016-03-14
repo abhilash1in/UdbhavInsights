@@ -43,29 +43,15 @@ public class RegisterRootFragment extends Fragment {
                 builder.setPositiveButton("INTER", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        FragmentTransaction transaction = getFragmentManager()
-                                .beginTransaction();
-		/*
-		 * When this container fragment is created, we fill it with our first
-		 * "real" fragment
-		 */
-                        transaction.replace(R.id.register_frame, new RegisterFragment());
-                        transaction.commit();
-
+                        RegisterFragment.inter=true;
+                        fragment_transaction();
                     }
                 });
                 builder.setNegativeButton("INTRA", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        FragmentTransaction transaction = getFragmentManager()
-                                .beginTransaction();
-		/*
-		 * When this container fragment is created, we fill it with our first
-		 * "real" fragment
-		 */
-                        transaction.replace(R.id.register_frame, new IntraRegisterFragment());
-                        transaction.commit();
-
+                        RegisterFragment.inter=false;
+                        fragment_transaction();
                     }
                 });
                 builder.show();
@@ -86,5 +72,13 @@ public class RegisterRootFragment extends Fragment {
         });
 
         return view;
+    }
+
+    void fragment_transaction()
+    {
+        FragmentTransaction transaction = getFragmentManager()
+                .beginTransaction();
+        transaction.replace(R.id.register_frame, new RegisterFragment());
+        transaction.commit();
     }
 }
