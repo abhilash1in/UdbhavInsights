@@ -7,7 +7,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,8 +20,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import org.apache.commons.lang3.RandomStringUtils;
-
 
 import com.msrit.abhilash.udbhavinsights.Data.Data;
 import com.msrit.abhilash.udbhavinsights.Data.ItemData;
@@ -31,6 +28,7 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,7 +56,8 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
     String na,u,c,p,e;
     ProgressDialog dialog;
     ParseUser pu = ParseUser.getCurrentUser();
-
+    ArrayList<ParseObject> eventsData = new ArrayList<>();
+    ArrayList<String> event_names = new ArrayList<>();
 
 
 
@@ -265,6 +264,9 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
         {
             if(allcbs.get(i).isChecked())
             {
+                String className = allcbs.get(i).getText().toString();
+                className = className.replaceAll("[^A-Za-z]","");
+                ParseObject object = new ParseObject(className);
                 JSONObject one_event = new JSONObject();
                 JSONArray names = new JSONArray();
                 try
@@ -295,6 +297,14 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                     }
                     one_event.put(allcbs.get(i).getText().toString(),names);
                     allevents.put(one_event);
+                    object.put("participants",one_event.toString());
+                    object.put("name",na);
+                    object.put("usn",u);
+                    object.put("email",e);
+                    object.put("phone",p);
+                    object.put("college",c);
+                    object.put("id",id);
+                    eventsData.add(object);
                     /*reg_data.put(allcbs.get(i).getText().toString(),names);*/
 
                 }
@@ -351,6 +361,30 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
     void upload(JSONObject payload)
     {
         if(isNetworkAvailable()) {
+
+            try{
+                ParseObject.saveAllInBackground(eventsData, new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if(e==null){
+                            Log.v("test","Registration stage 1 successful");
+                        }
+                        else
+                        {
+                            e.printStackTrace();
+                            Log.v("test","Registration stage 1 error "+e.getMessage());
+
+                        }
+
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+
             final ParseObject testObject = new ParseObject("registration");
             testObject.put("reg", payload.toString());
             testObject.put("paid",false);
@@ -359,7 +393,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                 public void done(ParseException e) {
                     dialog.dismiss();
                     if (e == null) {
-                        Toast.makeText(getActivity(), "Registration successful!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Registration stage 2 successful!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);

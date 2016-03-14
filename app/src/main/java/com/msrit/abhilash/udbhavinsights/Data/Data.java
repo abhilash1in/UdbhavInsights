@@ -140,7 +140,7 @@ public class Data {
         EventData Event = new EventData();
         Event.setEvent_name("Dumb Charades");
         Event.setInter(true);
-        Event.setSize(1);
+        Event.setSize(3);
         Event.setDate("31/03/2016 (day 2)");
         Event.setTime("09:00 am");
         Event.setVenue("Class room 1");
