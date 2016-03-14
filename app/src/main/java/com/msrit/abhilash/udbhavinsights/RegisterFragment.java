@@ -209,7 +209,14 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
 
     void dispatchMail()
     {
-        new sendMail(getContext(),pu.getEmail()).execute(email.getText().toString());
+        StringBuilder body = new StringBuilder("<h3>Hola!</h3>" +
+                "<h3>Thank you for registering to participate in Udbhav 2016 #circusStreet, happening from 30th March to 1st April 2016! Yu can find your registration details and confirmation code below. The confirmation code will serve as your identification during the fest.&nbsp;</h3>"+
+                "<h3>Your registration details are as follows:</h3>");
+        body.append("<h3>Name:"+na+"</h3>");
+        body.append("<h3>USN:"+u+"</h3>");
+
+        String emailBody = "";
+        new sendMail(getContext(),pu.getEmail(),emailBody).execute(email.getText().toString());
     }
 
     void submit()
