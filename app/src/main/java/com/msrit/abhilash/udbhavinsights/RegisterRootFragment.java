@@ -62,7 +62,7 @@ public class RegisterRootFragment extends Fragment {
                     }
                 });
                 builder.setCancelable(false);
-                builder.show();*/
+                builder.create().show();*/
 
 
             }

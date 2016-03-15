@@ -23,6 +23,9 @@ import com.parse.SignUpCallback;
 
 import java.util.List;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 public class register extends AppCompatActivity {
 
     ProgressDialog progress;
@@ -72,16 +75,52 @@ public class register extends AppCompatActivity {
                 final String email = emailView.getText().toString();
                 final String id = idView.getText().toString();
                 final String password = passwordView.getText().toString();
-                final long phone = Long.parseLong(phNo.getText().toString());
+                long phone = 0;
+                if(!phNo.getText().toString().equals(""))
+                    phone = Long.parseLong(phNo.getText().toString());
 
                 if (id.isEmpty() || password.isEmpty() || name.isEmpty() || email.isEmpty()) {
+                    if(progress.isShowing())
+                    {
+                        progress.dismiss();
+                    }
                     AlertDialog.Builder builder = new AlertDialog.Builder(register.this);
                     builder.setMessage("Please make sure you entered all the fields correctly.")
                             .setTitle("Oops!")
                             .setPositiveButton(android.R.string.ok, null);
                     AlertDialog dialog = builder.create();
                     dialog.show();
+                    return;
+                }
 
+                boolean valid = (id != null) && id.matches("[A-Za-z0-9_]+");
+                if(!valid)
+                {
+                    if(progress.isShowing())
+                    {
+                        progress.dismiss();
+                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(register.this);
+                    builder.setMessage("Invalid username! Use only alphanumeric characters without blank space")
+                            .setTitle("Oops!")
+                            .setPositiveButton(android.R.string.ok, null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                    return;
+                }
+
+                if(!isValidEmailAddress(email))
+                {
+                    if(progress.isShowing())
+                    {
+                        progress.dismiss();
+                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(register.this);
+                    builder.setMessage("Invalid email!")
+                            .setTitle("Oops!")
+                            .setPositiveButton(android.R.string.ok, null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                     return;
                 }
 
@@ -107,14 +146,11 @@ public class register extends AppCompatActivity {
                                 Toast toast = Toast.makeText(getApplicationContext(), "User already exists", Toast.LENGTH_SHORT);
                                 toast.show();
                             } else {
-
                                 signupUser(user);
-
-
                             }
                         } else {
                             // Shit happened!
-                            if(progress!=null)
+                            if(progress.isShowing())
                                 progress.dismiss();
                             AlertDialog.Builder builder = new AlertDialog.Builder(register.this);
                             builder.setMessage(e.getMessage())
@@ -136,7 +172,7 @@ public class register extends AppCompatActivity {
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
-                if(progress!=null)
+                if(progress.isShowing())
                     progress.dismiss();
                 if (e == null) {
 
@@ -152,7 +188,7 @@ public class register extends AppCompatActivity {
                     // Fail!
                     AlertDialog.Builder builder = new AlertDialog.Builder(register.this);
                     builder.setMessage(e.getMessage())
-                            .setTitle("Oops!")
+                            .setTitle("Oops! Signup failed")
                             .setPositiveButton(android.R.string.ok, null);
                     AlertDialog dialog = builder.create();
                     dialog.show();
@@ -175,5 +211,16 @@ public class register extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    public boolean isValidEmailAddress(String email) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
     }
 }

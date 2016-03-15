@@ -159,8 +159,8 @@ public class MainActivity extends AppCompatActivity {
         else if (id == R.id.action_about) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("About");
-            builder.setMessage("Version: "+R.string.version+"\n Release Date: "+R.string.releaseDate);
-            builder.show();
+            builder.setMessage("Version: "+getString(R.string.version)+"\n Release Date: "+getString(R.string.releaseDate));
+            builder.create().show();
             return true;
         }
         else if (id == R.id.action_push) {

@@ -67,13 +67,12 @@ public class Data {
     public static ArrayList<ItemData> getMusicEvents() {
         final ArrayList<ItemData> MusicEvents = new ArrayList<>();
         MusicEvents.add(new ItemData("Inter-College events",0,null,true,0));
-        MusicEvents.add(new ItemData("Western Group Music", R.mipmap.icon2,getMusicEvent0Data(),true,1000));
-        MusicEvents.add(new ItemData("Indian Group Music", R.mipmap.icon2,getMusicEvent1Data(),true,500));
+        MusicEvents.add(new ItemData("Battle of bands (enter team name)", R.mipmap.icon2,getMusicEvent0Data(),true,1000));
+        MusicEvents.add(new ItemData("Indian Group Music (enter team name)", R.mipmap.icon2,getMusicEvent1Data(),true,500));
         MusicEvents.add(new ItemData("Western Acoustics Solo",  R.mipmap.icon2,getMusicEvent2Data(),true,100));
         MusicEvents.add(new ItemData("Western Acoustics Group",  R.mipmap.icon2,getMusicEvent3Data(),true,300));
         MusicEvents.add(new ItemData("Indian Light Music Solo", R.mipmap.icon2,getMusicEvent4Data(),true,150));
-        MusicEvents.add(new ItemData("Classical Vocal Solo", R.mipmap.icon2,getMusicEvent5Data(),true,300));
-        MusicEvents.add(new ItemData("Semi - Classical Vocal Solo", R.mipmap.icon2,getMusicEvent6Data(),true,50));
+        MusicEvents.add(new ItemData("Classical Vocal Solo", R.mipmap.icon2,getMusicEvent6Data(),true,50));
         MusicEvents.add(new ItemData("Classical Instrumental Solo",  R.mipmap.icon2,getMusicEvent7Data(),true,50));
         MusicEvents.add(new ItemData("Beat Boxing",  R.mipmap.icon2,getMusicEvent8Data(),true,100));
         MusicEvents.add(new ItemData("Intra-College events",0,null,false,0));
@@ -111,11 +110,11 @@ public class Data {
 
     public static ArrayList<ItemData> getUdbhavCupEvents() {
         final ArrayList<ItemData> UdbhavCupEvents = new ArrayList<>();
-        UdbhavCupEvents.add(new ItemData("Inter-College events",0,null,true,0));
-        UdbhavCupEvents.add(new ItemData("Badminton", R.mipmap.icon2,getUdbCupEvent0Data(),true,0));
-        UdbhavCupEvents.add(new ItemData("Basketball",  R.mipmap.icon2,getUdbCupEvent1Data(),true,0));
-        UdbhavCupEvents.add(new ItemData("Cricket",  R.mipmap.icon2,getUdbCupEvent2Data(),true,0));
-        UdbhavCupEvents.add(new ItemData("Football", R.mipmap.icon2,getUdbCupEvent3Data(),true,0));
+        UdbhavCupEvents.add(new ItemData("Intra-College events",0,null,false,0));
+        UdbhavCupEvents.add(new ItemData("Badminton", R.mipmap.icon2,getUdbCupEvent0Data(),false,0));
+        UdbhavCupEvents.add(new ItemData("Basketball",  R.mipmap.icon2,getUdbCupEvent1Data(),false,0));
+        UdbhavCupEvents.add(new ItemData("Cricket",  R.mipmap.icon2,getUdbCupEvent2Data(),false,0));
+        UdbhavCupEvents.add(new ItemData("Football", R.mipmap.icon2,getUdbCupEvent3Data(),false,0));
         return UdbhavCupEvents;
     }
 
@@ -435,9 +434,9 @@ public class Data {
     public static EventData getMusicEvent0Data()
     {
         EventData Event0 = new EventData();
-        Event0.setEvent_name("Western Group Music");
+        Event0.setEvent_name("Battle of bands");
         Event0.setInter(true);
-        Event0.setSize(12);     //todo doubt
+        Event0.setSize(2);
         Event0.setDate(day3);
         Event0.setTime("12:00 pm");
         Event0.setVenue("Main Stage");
@@ -451,7 +450,7 @@ public class Data {
         EventData Event0 = new EventData();
         Event0.setEvent_name("Indian Group Music");
         Event0.setInter(true);
-        Event0.setSize(6);  //todo doubt
+        Event0.setSize(2);
         Event0.setDate(day1);
         Event0.setTime("03:00 pm");
         Event0.setVenue("Main Stage");
@@ -499,20 +498,6 @@ public class Data {
         Event0.setVenue("Amphi Theatre");
         Event0.setCoordinator("Shriya");
         Event0.setPhone("9632413752");
-        return Event0;
-    }
-
-    public static EventData getMusicEvent5Data()
-    {
-        EventData Event0 = new EventData();
-        Event0.setEvent_name("Classical Vocal Solo");
-        Event0.setInter(true);
-        Event0.setSize(1);
-        Event0.setDate(day2);
-        Event0.setTime("12:00 pm");
-        Event0.setVenue("LHC Seminar Hall 1");
-        Event0.setCoordinator("Pramod Gabbur");
-        Event0.setPhone("8147650695");
         return Event0;
     }
 

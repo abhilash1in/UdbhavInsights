@@ -42,6 +42,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 /**
  * Created by Abhilash on 13/03/2016.
  */
@@ -101,6 +104,12 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
         name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                for(int i=0;i<mainNameIndex.size();i++)
+                {
+                    allets.get(mainNameIndex.get(i)).setEnabled(false);
+                    allets.get(mainNameIndex.get(i)).setFocusable(false);
+                    allets.get(mainNameIndex.get(i)).setTextColor(Color.parseColor("#000000"));
+                }
             }
 
             @Override
@@ -227,10 +236,10 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                 "<p>Thank you for registering to participate in Udbhav 2016 #circusStreet, happening from 30th March to 1st April 2016! You can find your registration details and the registration code below. The registration code will serve as your identification during the fest.&nbsp;</p>"+
                 "<p>Your registration details are as follows:</p>");
         body.append("<p>Name:&nbsp; "+na+"</p>");
-        body.append("<p>USN:&nbsp; "+u+"</p>");
-        body.append("<p>College:&nbsp; "+c+"</p>");
+        body.append("<p>USN:&nbsp; " + u + "</p>");
+        body.append("<p>College:&nbsp; " + c + "</p>");
         body.append("<p>Phone:&nbsp; "+p+"</p>");
-        body.append("<p>Email:&nbsp; "+e+"</p>");
+        body.append("<p>Email:&nbsp; " + e + "</p>");
         body.append("<p>Confirmation Id:&nbsp; <b>"+id+"</b></p>");
         body.append("<p><u>Event Registration Details</u></p>");
         body.append("<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">");
@@ -269,7 +278,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
         body.append("<a href=\"http://msritudbhav.in\"><u> visit Udbhav 2016 website</u></a></p>");
         body.append("<p>We hope you have a great time! Looking forward to see you real soon!</p><br>");
         body.append("<p>Regards,</p>");
-        body.append("<p>Fest Management, Udbhav 2016</p>");
+        body.append("<p>Udbhav 2016</p>");
         body.append("</html>");
         String emailBody = body.toString();
         new sendMail(getContext(),pu.getEmail(),emailBody).execute(email.getText().toString());
@@ -293,6 +302,18 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             c = college.getText().toString();
             p = phone.getText().toString();
             e = email.getText().toString();
+
+            if(!isValidEmailAddress(e))
+            {
+                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+                builder.setMessage("Invalid email!")
+                        .setTitle("Oops!")
+                        .setPositiveButton(android.R.string.ok, null);
+                android.support.v7.app.AlertDialog dialog = builder.create();
+                dialog.show();
+                return;
+            }
+
             reg_data.put("name",na);
             reg_data.put("usn", u);
             reg_data.put("college", c);
@@ -302,7 +323,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
         }
         catch (JSONException e)
         {
-            if(dialog!=null)
+            if(dialog.isShowing())
             {
                 dialog.dismiss();
             }
@@ -360,7 +381,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                 }
                 catch (JSONException e1)
                 {
-                    if(dialog!=null)
+                    if(dialog.isShowing())
                     {
                         dialog.dismiss();
                     }
@@ -380,7 +401,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             /*Log.v("json", reg_data.toString(4));*/
         }catch (JSONException e)
         {
-            if(dialog!=null)
+            if(dialog.isShowing())
             {
                 dialog.dismiss();
             }
@@ -395,19 +416,19 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             }
             catch (Exception e)
             {
-                if(dialog!=null)
+                if(dialog.isShowing())
                 {
                     dialog.dismiss();
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Error");
                 builder.setMessage("Bad internet connection! Registration unsuccessful");
-                builder.show();
+                builder.create().show();
             }
         }
         else
         {
-            if(dialog!=null)
+            if(dialog.isShowing())
             {
                 dialog.dismiss();
             }
@@ -440,7 +461,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                             testObject.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
-                                    if(dialog!=null)
+                                    if(dialog.isShowing())
                                     {
                                         dialog.dismiss();
                                     }
@@ -458,7 +479,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                         }
                         else
                         {
-                            if(dialog!=null)
+                            if(dialog.isShowing())
                             {
                                 dialog.dismiss();
                             }
@@ -470,7 +491,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             }
             catch (Exception e)
             {
-                if(dialog!=null)
+                if(dialog.isShowing())
                 {
                     dialog.dismiss();
                 }
@@ -478,7 +499,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             }
         }
         else{
-            if(dialog!=null)
+            if(dialog.isShowing())
             {
                 dialog.dismiss();
             }
@@ -491,5 +512,16 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                 = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public boolean isValidEmailAddress(String email) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
     }
 }

@@ -63,7 +63,9 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
     ArrayList<ParseObject> eventsData = new ArrayList<>();
     ArrayList<Integer> mainNameIndex = new ArrayList<>();
     TextView reg_type;
-    /*ArrayList<String> classNamesForArjun = new ArrayList<>();*/
+/*
+    ArrayList<String> classNamesForArjun = new ArrayList<>();
+*/
 
     String id;
 
@@ -308,7 +310,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
         }
         catch (JSONException e)
         {
-            if(dialog!=null)
+            if(dialog.isShowing())
             {
                 dialog.dismiss();
             }
@@ -321,7 +323,9 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             {
                 String className = allcbs.get(i).getText().toString();
                 className = className.replaceAll("[^A-Za-z0-9]","");
-                /*classNamesForArjun.add(className);*/
+/*
+                classNamesForArjun.add(className);
+*/
 
                 ParseObject object = new ParseObject(className);
                 JSONObject one_event = new JSONObject();
@@ -366,7 +370,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                 }
                 catch (JSONException e1)
                 {
-                    if(dialog!=null)
+                    if(dialog.isShowing())
                     {
                         dialog.dismiss();
                     }
@@ -375,7 +379,9 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             }
         }
 
-        /*Log.v("testarjun",classNamesForArjun.toString());*/
+/*
+        Log.v("testarjun",classNamesForArjun.toString());
+*/
 
 
 
@@ -386,7 +392,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             Log.v("json", reg_data.toString(4));
         }catch (JSONException e)
         {
-            if(dialog!=null)
+            if(dialog.isShowing())
             {
                 dialog.dismiss();
             }
@@ -399,7 +405,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
         }
         else
         {
-            if(dialog!=null)
+            if(dialog.isShowing())
             {
                 dialog.dismiss();
             }
@@ -432,7 +438,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                             testObject.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
-                                    if(dialog!=null)
+                                    if(dialog.isShowing())
                                     {
                                         dialog.dismiss();
                                     }
@@ -450,7 +456,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                         }
                         else
                         {
-                            if(dialog!=null)
+                            if(dialog.isShowing())
                             {
                                 dialog.dismiss();
                             }
@@ -462,7 +468,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             }
             catch (Exception e)
             {
-                if(dialog!=null)
+                if(dialog.isShowing())
                 {
                     dialog.dismiss();
                 }
@@ -470,7 +476,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             }
         }
         else{
-            if(dialog!=null)
+            if(dialog.isShowing())
             {
                 dialog.dismiss();
             }
