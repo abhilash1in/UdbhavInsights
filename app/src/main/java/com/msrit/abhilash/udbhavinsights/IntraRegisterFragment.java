@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -85,6 +86,15 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
 
         reg_type = (TextView) view.findViewById(R.id.registration_type);
         reg_type.setText("Intra College Registration");
+        reg_type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getFragmentManager()
+                        .beginTransaction();
+                transaction.replace(R.id.register_frame, new RegisterFragment());
+                transaction.commit();
+            }
+        });
         name = (EditText) view.findViewById(R.id.name);
         name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -165,12 +175,10 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                             if (!isChecked) {
                                 Log.v("amount",""+amt);
                                 Log.v("amount",""+id2.getAmt());
-                                amt-=id2.getAmt();
                                 etll.setVisibility(View.GONE);
                             } else {
                                 Log.v("amount",""+amt);
                                 Log.v("amount",""+id2.getAmt());
-                                amt+=id2.getAmt();
                                 etll.setVisibility(View.VISIBLE);
                                 etll.requestFocus();
                             }

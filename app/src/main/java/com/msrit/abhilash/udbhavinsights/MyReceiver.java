@@ -50,8 +50,8 @@ public class MyReceiver extends ParsePushBroadcastReceiver {
             notif.setContentTitle(cls.getString("title"))
                     .setContentText(cls.getString("alert"))
                             //.setColor(Color.parseColor("fff")) //ok
-                    .setSmallIcon(R.mipmap.push_icon2) //ok
-                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.push_icon2))
+                    .setSmallIcon(R.mipmap.push_icon3) //ok
+                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.push_icon3))
                     .setPriority(Notification.PRIORITY_HIGH)
                     .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
                     .setContentIntent(pContentIntent)

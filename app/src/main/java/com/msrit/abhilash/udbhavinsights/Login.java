@@ -96,7 +96,7 @@ public class Login extends AppCompatActivity {
                             // Successful Query
 
                             // User already exists ? then login
-                            if (parseUsers.size() > 0) {;
+                            if (parseUsers.size() > 0) {
                                 loginUser(id, pass);
                             } else {
                                 // No user found, so signup

@@ -36,8 +36,12 @@ public class RegisterRootFragment extends Fragment {
         {
             if(user.getBoolean("reg_auth")) {
                 tv.setVisibility(View.GONE);
+                FragmentTransaction transaction = getFragmentManager()
+                        .beginTransaction();
+                transaction.replace(R.id.register_frame, new RegisterFragment());
+                transaction.commit();
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                /*AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Registration Type");
                 builder.setPositiveButton("INTER", new DialogInterface.OnClickListener() {
                     @Override
@@ -58,7 +62,7 @@ public class RegisterRootFragment extends Fragment {
                     }
                 });
                 builder.setCancelable(false);
-                builder.show();
+                builder.show();*/
 
 
             }

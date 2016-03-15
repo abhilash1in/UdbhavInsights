@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 String jsonData = extras.getString("com.parse.Data");
                 JSONObject json;
                 json = new JSONObject(jsonData);
-                uriString = json.optString("uri", (String)null);
+                uriString = json.optString("uri", null);
                 if(uriString!=null && !uriString.equals(""))
                 {
 
@@ -156,10 +156,11 @@ public class MainActivity extends AppCompatActivity {
             logout();
             return true;
         }
-        else if (id == R.id.action_settings) {
+        else if (id == R.id.action_about) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("About");
             builder.setMessage("Version"+R.string.version+"\n Release Date:"+R.string.releaseDate);
+            builder.show();
             return true;
         }
         else if (id == R.id.action_push) {
@@ -200,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         progress.setCancelable(false);
         progress.show();
 
-        Login.currentUser.logOutInBackground(new LogOutCallback() {
+        ParseUser.logOutInBackground(new LogOutCallback() {
             @Override
             public void done(ParseException e) {
                 progress.dismiss();
