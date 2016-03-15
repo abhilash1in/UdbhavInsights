@@ -110,7 +110,7 @@ public class Login extends AppCompatActivity {
                             // Shit happened!
                             progress.dismiss();
                             AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-                            builder.setMessage(e.getMessage())
+                            builder.setMessage("Bad internet connection. Connect to the internet and try again! Error: "+e.getMessage())
                                     .setTitle("Oops!")
                                     .setPositiveButton(android.R.string.ok, null);
                             AlertDialog dialog = builder.create();
@@ -139,7 +139,7 @@ public class Login extends AppCompatActivity {
                 } else {
                     // Login failed!
                     AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-                    builder.setMessage(e.getMessage())
+                    builder.setMessage("Bad internet connection. Connect to the internet and try again! Error: "+e.getMessage())
                             .setTitle("Oops!")
                             .setPositiveButton(android.R.string.ok, null);
                     AlertDialog dialog = builder.create();

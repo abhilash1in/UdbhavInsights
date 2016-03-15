@@ -1,7 +1,9 @@
 package com.msrit.abhilash.udbhavinsights;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -41,6 +43,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 /**
  * Created by Abhilash on 13/03/2016.
  */
@@ -63,9 +68,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
     ArrayList<ParseObject> eventsData = new ArrayList<>();
     ArrayList<Integer> mainNameIndex = new ArrayList<>();
     TextView reg_type;
-/*
-    ArrayList<String> classNamesForArjun = new ArrayList<>();
-*/
+    /*ArrayList<String> classNamesForArjun = new ArrayList<>();*/
 
     String id;
 
@@ -114,7 +117,6 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
 
                 for(int i=0;i<mainNameIndex.size();i++)
                 {
-                    Log.v("mainname",""+mainNameIndex.get(i));
                     allets.get(mainNameIndex.get(i)).setText(s.toString());
                     allets.get(mainNameIndex.get(i)).setEnabled(false);
                     allets.get(mainNameIndex.get(i)).setFocusable(false);
@@ -175,12 +177,8 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             if (!isChecked) {
-                                Log.v("amount",""+amt);
-                                Log.v("amount",""+id2.getAmt());
                                 etll.setVisibility(View.GONE);
                             } else {
-                                Log.v("amount",""+amt);
-                                Log.v("amount",""+id2.getAmt());
                                 etll.setVisibility(View.VISIBLE);
                                 etll.requestFocus();
                             }
@@ -235,10 +233,10 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                 "<p>Thank you for registering to participate in Udbhav 2016 #circusStreet, happening from 30th March to 1st April 2016! You can find your registration details and the registration code below. The registration code will serve as your identification during the fest.&nbsp;</p>"+
                 "<p>Your registration details are as follows:</p>");
         body.append("<p>Name:&nbsp; "+na+"</p>");
-        body.append("<p>USN:&nbsp; "+u+"</p>");
-        body.append("<p>College:&nbsp; "+c+"</p>");
+        body.append("<p>USN:&nbsp; " + u + "</p>");
+        body.append("<p>College:&nbsp; " + c + "</p>");
         body.append("<p>Phone:&nbsp; "+p+"</p>");
-        body.append("<p>Email:&nbsp; "+e+"</p>");
+        body.append("<p>Email:&nbsp; " + e + "</p>");
         body.append("<p>Confirmation Id:&nbsp; <b>"+id+"</b></p>");
         body.append("<p><u>Event Registration Details</u></p>");
         body.append("<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">");
@@ -277,7 +275,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
         body.append("<a href=\"http://msritudbhav.in\"><u> visit Udbhav 2016 website</u></a></p>");
         body.append("<p>We hope you have a great time! Looking forward to see you real soon!</p><br>");
         body.append("<p>Regards,</p>");
-        body.append("<p>Fest Management, Udbhav 2016</p>");
+        body.append("<p>Udbhav 2016</p>");
         body.append("</html>");
         String emailBody = body.toString();
         new sendMail(getContext(),pu.getEmail(),emailBody).execute(email.getText().toString());
@@ -301,6 +299,22 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             c = college.getText().toString();
             p = phone.getText().toString();
             e = email.getText().toString();
+
+            if(!isValidEmailAddress(e))
+            {
+                if(dialog.isShowing())
+                {
+                    dialog.dismiss();
+                }
+                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+                builder.setMessage("Invalid email!")
+                        .setTitle("Oops!")
+                        .setPositiveButton(android.R.string.ok, null);
+                android.support.v7.app.AlertDialog dialog = builder.create();
+                dialog.show();
+                return;
+            }
+
             reg_data.put("name",na);
             reg_data.put("usn", u);
             reg_data.put("college", c);
@@ -323,9 +337,6 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             {
                 String className = allcbs.get(i).getText().toString();
                 className = className.replaceAll("[^A-Za-z0-9]","");
-/*
-                classNamesForArjun.add(className);
-*/
 
                 ParseObject object = new ParseObject(className);
                 JSONObject one_event = new JSONObject();
@@ -333,7 +344,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                 ArrayList<String> participants = new ArrayList<>();
                 try
                 {
-                    Log.v("test", allcbs.get(i).getText().toString());
+                    /*Log.v("test", allcbs.get(i).getText().toString());*/
 
                     if (i == 0) {
                         for (int k = 0; k < table.get(i); k++) {
@@ -341,17 +352,17 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
 
                                 names.put(allets.get(k).getText().toString());
                                 participants.add(allets.get(k).getText().toString());
-                                Log.v("test", allets.get(k).getText().toString());
+                                /*Log.v("test", allets.get(k).getText().toString());*/
                             }
                         }
                     } else {
-                        Log.v("test", "1. " + (table.get(i - 1)) + "  2. " + table.get(i));
+                        /*Log.v("test", "1. " + (table.get(i - 1)) + "  2. " + table.get(i));*/
                         for (int j = table.get(i - 1); j < table.get(i); j++) {
                             if (allets.get(j) != null && allets.get(j).getText().toString() != "" && allets.get(j).getText().toString() != null) {
 
                                 names.put(allets.get(j).getText().toString());
                                 participants.add(allets.get(j).getText().toString());
-                                Log.v("test", allets.get(j).getText().toString());
+                                /*Log.v("test", allets.get(j).getText().toString());*/
                             }
                         }
                     }
@@ -389,7 +400,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             reg_data.put("events", allevents);
             reg_data.put("amount", amt);
             reg_data.put("submitted_by", pu.getString("name"));
-            Log.v("json", reg_data.toString(4));
+            /*Log.v("json", reg_data.toString(4));*/
         }catch (JSONException e)
         {
             if(dialog.isShowing())
@@ -400,8 +411,19 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
         }
 
         if (na.length()>0&&u.length()>0&&c.length()>0&&p.length()>0&&e.length()>0) {
-            dispatchMail();
-            upload(reg_data);
+            try
+            {
+                dispatchMail();
+                upload(reg_data);
+            }
+            catch (Exception e)
+            {
+                if(dialog.isShowing())
+                {
+                    Log.v("test","dialog dismissed");
+                    dialog.dismiss();
+                }
+            }
         }
         else
         {
@@ -416,7 +438,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
 
     void compute()
     {
-        Log.v("test", "computed!!");
+        /*Log.v("test", "computed!!");*/
         for(int i=1;i<table.size();i++)
         {
             table.set(i,table.get(i)+table.get(i-1));
@@ -459,6 +481,20 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                             if(dialog.isShowing())
                             {
                                 dialog.dismiss();
+/*
+                                Toast.makeText(getContext(), "Bad internet connection. Registration failed. Please try submitting again", Toast.LENGTH_SHORT).show();
+*/
+                                AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity());
+                                builder2.setTitle("Error");
+                                builder2.setMessage("Bad internet connection! Registration unsuccessful. Please check internet connection and try submitting again");
+                                builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+                                builder2.setCancelable(false);
+                                builder2.create().show();
                             }
                             e.printStackTrace();
                             Log.v("test","Registration stage 1 failed "+e.getMessage());
@@ -489,5 +525,16 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                 = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public boolean isValidEmailAddress(String email) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
     }
 }

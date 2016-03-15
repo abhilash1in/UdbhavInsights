@@ -69,7 +69,7 @@ public class sendMail extends AsyncTask<String,Void, ClientResponse>{
             }
             catch(Exception e1)
             {
-                Log.v("test",e1.getMessage());
+                Log.v("test inner",e1.getMessage());
             }
 
         }

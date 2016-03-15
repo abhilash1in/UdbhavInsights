@@ -3,6 +3,7 @@ package com.msrit.abhilash.udbhavinsights;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -104,12 +105,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
         name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                for(int i=0;i<mainNameIndex.size();i++)
-                {
-                    allets.get(mainNameIndex.get(i)).setEnabled(false);
-                    allets.get(mainNameIndex.get(i)).setFocusable(false);
-                    allets.get(mainNameIndex.get(i)).setTextColor(Color.parseColor("#000000"));
-                }
+
             }
 
             @Override
@@ -218,6 +214,13 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
 
                 }
             }
+
+            for(int i=0;i<mainNameIndex.size();i++)
+            {
+                allets.get(mainNameIndex.get(i)).setEnabled(false);
+                allets.get(mainNameIndex.get(i)).setFocusable(false);
+                allets.get(mainNameIndex.get(i)).setTextColor(Color.parseColor("#000000"));
+            }
         }
 
         compute();
@@ -305,6 +308,10 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
 
             if(!isValidEmailAddress(e))
             {
+                if(dialog.isShowing())
+                {
+                    dialog.dismiss();
+                }
                 android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
                 builder.setMessage("Invalid email!")
                         .setTitle("Oops!")
@@ -404,6 +411,7 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             if(dialog.isShowing())
             {
                 dialog.dismiss();
+
             }
             e.printStackTrace();
         }
@@ -418,12 +426,9 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             {
                 if(dialog.isShowing())
                 {
+                    Log.v("test","dialog dismissed");
                     dialog.dismiss();
                 }
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Error");
-                builder.setMessage("Bad internet connection! Registration unsuccessful");
-                builder.create().show();
             }
         }
         else
@@ -482,6 +487,20 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                             if(dialog.isShowing())
                             {
                                 dialog.dismiss();
+/*
+                                Toast.makeText(getContext(), "Bad internet connection. Registration failed. Please try submitting again", Toast.LENGTH_SHORT).show();
+*/
+                                AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity());
+                                builder2.setTitle("Error");
+                                builder2.setMessage("Bad internet connection! Registration unsuccessful. Please check internet connection and try submitting again");
+                                builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+                                builder2.setCancelable(false);
+                                builder2.create().show();
                             }
                             e.printStackTrace();
                             Log.v("test","Registration stage 1 failed "+e.getMessage());

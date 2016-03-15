@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         else if (id == R.id.action_about) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("About");
-            builder.setMessage("Version: "+getString(R.string.version)+"\n Release Date: "+getString(R.string.releaseDate));
+            builder.setMessage("Version: " + getString(R.string.version) + "\n Release Date: " + getString(R.string.releaseDate));
             builder.create().show();
             return true;
         }
@@ -201,19 +201,26 @@ public class MainActivity extends AppCompatActivity {
         progress.setCancelable(false);
         progress.show();
 
-        ParseUser.logOutInBackground(new LogOutCallback() {
-            @Override
-            public void done(ParseException e) {
-                progress.dismiss();
-                if (e == null) {
-                    Toast.makeText(MainActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
-                    goToLogin();
-                } else {
-                    Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+        if(isNetworkAvailable())
+        {
+            ParseUser.logOutInBackground(new LogOutCallback() {
+                @Override
+                public void done(ParseException e) {
+                    progress.dismiss();
+                    if (e == null) {
+                        Toast.makeText(MainActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+                        goToLogin();
+                    } else {
+                        Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
 
-            }
-        });
+                }
+            });
+        }
+        else {
+            Toast.makeText(MainActivity.this, "Connect to the internet and try again", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     private void uploadResults()
