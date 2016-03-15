@@ -1,5 +1,6 @@
 package com.msrit.abhilash.udbhavinsights;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -100,7 +101,6 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
         name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -388,8 +388,22 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
         }
 
         if (na.length()>0&&u.length()>0&&c.length()>0&&p.length()>0&&e.length()>0) {
-            dispatchMail();
-            upload(reg_data);
+            try
+            {
+                dispatchMail();
+                upload(reg_data);
+            }
+            catch (Exception e)
+            {
+                if(dialog!=null)
+                {
+                    dialog.dismiss();
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Error");
+                builder.setMessage("Bad internet connection! Registration unsuccessful");
+                builder.show();
+            }
         }
         else
         {
