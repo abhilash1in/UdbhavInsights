@@ -32,47 +32,47 @@ public class sendMail extends AsyncTask<String,Void, ClientResponse>{
 
     @Override
     protected ClientResponse doInBackground(String... params) {
-        try
-        {
+
             if(isNetworkAvailable())
             {
-                Client client = Client.create();
-                client.addFilter(new HTTPBasicAuthFilter("api",
-                        "key-cba8a0cb565dc4a9bfef0f1713c67fdd"));
-                WebResource webResource =
-                        client.resource("https://api.mailgun.net/v3/msritevents.in" +
-                                "/messages");
-                MultivaluedMapImpl formData = new MultivaluedMapImpl();
-                formData.add("o:skip-verification",true);
-                formData.add("from", "Udbhav 2016 <udbhav@msritevents.in>");
-                formData.add("h:Reply-To","abhilash1in@gmail.com");
-                formData.add("to",params[0]);
-                formData.add("to",e);
-                formData.add("to","reg.udbhav16@gmail.com");
-                formData.add("subject", "Udbhav 2016 Registration Confirmation");
-                formData.add("html", emailBody);
-                return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
-                        post(ClientResponse.class, formData);
+                try
+                {
+                    Client client = Client.create();
+                    client.addFilter(new HTTPBasicAuthFilter("api",
+                            "key-cba8a0cb565dc4a9bfef0f1713c67fdd"));
+                    WebResource webResource =
+                            client.resource("https://api.mailgun.net/v3/msritevents.in" +
+                                    "/messages");
+                    MultivaluedMapImpl formData = new MultivaluedMapImpl();
+                    formData.add("o:skip-verification",true);
+                    formData.add("from", "Udbhav 2016 <udbhav@msritevents.in>");
+                    formData.add("h:Reply-To","abhilash1in@gmail.com");
+                    formData.add("to",params[0]);
+                    formData.add("to",e);
+                    formData.add("to","reg.udbhav16@gmail.com");
+                    formData.add("subject", "Udbhav 2016 Registration Confirmation");
+                    formData.add("html", emailBody);
+                    return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).
+                            post(ClientResponse.class, formData);
+                }
+                catch (Exception e)
+                {
+                    try{
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("Error");
+                        builder.setMessage("Bad internet connection! Registration successful but email NOT sent! Error: "+e.getMessage());
+                        builder.create().show();
+                    }
+                    catch(Exception e1)
+                    {
+                        Log.v("test inner",e1.getMessage());
+                    }
+                }
             }
             else
             {
                 Log.v("test","no internet for email");
             }
-        }
-        catch(Exception e)
-        {
-            try{
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Error");
-                builder.setMessage("Bad internet connection! Registration unsuccessful");
-                builder.create().show();
-            }
-            catch(Exception e1)
-            {
-                Log.v("test inner",e1.getMessage());
-            }
-
-        }
         return null;
 
     }

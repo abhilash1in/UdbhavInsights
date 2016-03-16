@@ -115,8 +115,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             @Override
             public void afterTextChanged(Editable s) {
 
-                for(int i=0;i<mainNameIndex.size();i++)
-                {
+                for (int i = 0; i < mainNameIndex.size(); i++) {
                     allets.get(mainNameIndex.get(i)).setText(s.toString());
                     allets.get(mainNameIndex.get(i)).setEnabled(false);
                     allets.get(mainNameIndex.get(i)).setFocusable(false);
@@ -215,6 +214,12 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
 
                 }
             }
+            for(int i=0;i<mainNameIndex.size();i++)
+            {
+                allets.get(mainNameIndex.get(i)).setEnabled(false);
+                allets.get(mainNameIndex.get(i)).setFocusable(false);
+                allets.get(mainNameIndex.get(i)).setTextColor(Color.parseColor("#000000"));
+            }
         }
 
         compute();
@@ -229,56 +234,67 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
 
     void dispatchMail()
     {
-        StringBuilder body = new StringBuilder("<html><p>Hola!</p>" +
-                "<p>Thank you for registering to participate in Udbhav 2016 #circusStreet, happening from 30th March to 1st April 2016! You can find your registration details and the registration code below. The registration code will serve as your identification during the fest.&nbsp;</p>"+
-                "<p>Your registration details are as follows:</p>");
-        body.append("<p>Name:&nbsp; "+na+"</p>");
-        body.append("<p>USN:&nbsp; " + u + "</p>");
-        body.append("<p>College:&nbsp; " + c + "</p>");
-        body.append("<p>Phone:&nbsp; "+p+"</p>");
-        body.append("<p>Email:&nbsp; " + e + "</p>");
-        body.append("<p>Confirmation Id:&nbsp; <b>"+id+"</b></p>");
-        body.append("<p><u>Event Registration Details</u></p>");
-        body.append("<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">");
-        body.append("<thead><tr>");
-        body.append("<th scope=\"col\">Sl No.</th>");
-        body.append("<th scope=\"col\">Event Name</th>");
-        body.append("<th scope=\"col\">Participants</th>");
-        body.append("</tr></thead>");
-        body.append("<tbody>");
-        for(int i=0;i<eventsData.size();i++)
+        try
         {
-            ParseObject temp = eventsData.get(i);
-            String participant_names =temp.get("participants").toString();
-            participant_names = participant_names.replaceAll("\\[", "").replaceAll("\\]","");
-            body.append("<tr>");
+            StringBuilder body = new StringBuilder("<html><p>Hola!</p>" +
+                    "<p>Thank you for registering to participate in Udbhav 2016 #circusStreet, happening from 30th March to 1st April 2016! You can find your registration details and the registration code below. The registration code will serve as your identification during the fest.&nbsp;</p>"+
+                    "<p>Your registration details are as follows:</p>");
+            body.append("<p>Name:&nbsp; "+na+"</p>");
+            body.append("<p>USN:&nbsp; " + u + "</p>");
+            body.append("<p>College:&nbsp; " + c + "</p>");
+            body.append("<p>Phone:&nbsp; "+p+"</p>");
+            body.append("<p>Email:&nbsp; " + e + "</p>");
+            body.append("<p>Confirmation Id:&nbsp; <b>"+id+"</b></p>");
+            body.append("<p><u>Event Registration Details</u></p>");
+            body.append("<table border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">");
+            body.append("<thead><tr>");
+            body.append("<th scope=\"col\">Sl No.</th>");
+            body.append("<th scope=\"col\">Event Name</th>");
+            body.append("<th scope=\"col\">Participants</th>");
+            body.append("</tr></thead>");
+            body.append("<tbody>");
+            for(int i=0;i<eventsData.size();i++)
+            {
+                ParseObject temp = eventsData.get(i);
+                String participant_names =temp.get("participants").toString();
+                participant_names = participant_names.replaceAll("\\[", "").replaceAll("\\]","");
+                body.append("<tr>");
 
-            body.append("<td>&nbsp;");
-            body.append(i+1);
-            body.append(".");
-            body.append("</td>");
+                body.append("<td>&nbsp;");
+                body.append(i+1);
+                body.append(".");
+                body.append("</td>");
 
-            body.append("<td>&nbsp;");
-            body.append(temp.get("event_name"));
-            body.append("</td>");
+                body.append("<td>&nbsp;");
+                body.append(temp.get("event_name"));
+                body.append("</td>");
 
-            body.append("<td>&nbsp;");
-            body.append(participant_names);
-            body.append("</td>");
+                body.append("<td>&nbsp;");
+                body.append(participant_names);
+                body.append("</td>");
 
-            body.append("</tr>");
+                body.append("</tr>");
+            }
+
+            body.append("</tbody></table>");
+            body.append("<p> For event rules, schedule, co-ordinator contact details, updates and other details, ");
+            body.append("<a href=\"http://app.msritudbhav.in\"><u>download the official Udbhav 2016 android app</u></a> , or ");
+            body.append("<a href=\"http://msritudbhav.in\"><u> visit Udbhav 2016 website</u></a></p>");
+            body.append("<p>We hope you have a great time! Looking forward to see you real soon!</p><br>");
+            body.append("<p>Regards,</p>");
+            body.append("<p>Udbhav 2016</p>");
+            body.append("</html>");
+            String emailBody = body.toString();
+            new sendMail(getContext(),pu.getEmail(),emailBody).execute(email.getText().toString());
         }
-
-        body.append("</tbody></table>");
-        body.append("<p> For event rules, schedule, co-ordinator contact details, updates and other details, ");
-        body.append("<a href=\"http://app.msritudbhav.in\"><u>download the official Udbhav 2016 android app</u></a> , or ");
-        body.append("<a href=\"http://msritudbhav.in\"><u> visit Udbhav 2016 website</u></a></p>");
-        body.append("<p>We hope you have a great time! Looking forward to see you real soon!</p><br>");
-        body.append("<p>Regards,</p>");
-        body.append("<p>Udbhav 2016</p>");
-        body.append("</html>");
-        String emailBody = body.toString();
-        new sendMail(getContext(),pu.getEmail(),emailBody).execute(email.getText().toString());
+        catch(Exception e)
+        {
+            if(dialog.isShowing())
+            {
+                dialog.dismiss();
+            }
+            Toast.makeText(getActivity(), "Registration unsuccessful. Try again. Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     void submit()
@@ -328,6 +344,8 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             {
                 dialog.dismiss();
             }
+
+            Toast.makeText(getActivity(), "Registration unsuccessful. Try again. Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 
@@ -337,7 +355,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             {
                 String className = allcbs.get(i).getText().toString();
                 className = className.replaceAll("[^A-Za-z0-9]","");
-
+                /*classNamesForArjun.add(className);*/
                 ParseObject object = new ParseObject(className);
                 JSONObject one_event = new JSONObject();
                 JSONArray names = new JSONArray();
@@ -385,15 +403,13 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                     {
                         dialog.dismiss();
                     }
+                    Toast.makeText(getActivity(), "Registration unsuccessful. Try again. Error: "+e1.getMessage(), Toast.LENGTH_SHORT).show();
                     e1.printStackTrace();
                 }
             }
         }
 
-/*
-        Log.v("testarjun",classNamesForArjun.toString());
-*/
-
+        /*Log.v("testarjun",classNamesForArjun.toString());*/
 
 
         try{
@@ -407,13 +423,13 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             {
                 dialog.dismiss();
             }
+            Toast.makeText(getActivity(), "Registration unsuccessful. Try again. Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 
         if (na.length()>0&&u.length()>0&&c.length()>0&&p.length()>0&&e.length()>0) {
             try
             {
-                dispatchMail();
                 upload(reg_data);
             }
             catch (Exception e)
@@ -423,6 +439,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                     Log.v("test","dialog dismissed");
                     dialog.dismiss();
                 }
+                Toast.makeText(getActivity(), "Registration unsuccessful. Try again. Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
         else
@@ -465,6 +482,28 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                                         dialog.dismiss();
                                     }
                                     if (e == null) {
+                                        try
+                                        {
+                                            dispatchMail();
+                                        }
+                                        catch (Exception e1)
+                                        {
+                                            if(dialog.isShowing()) {
+                                                dialog.dismiss();
+                                            }
+
+                                            AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity());
+                                            builder2.setTitle("Error");
+                                            builder2.setMessage("Bad internet connection! Registration successful but email NOT sent. Please check internet connection and try submitting again. Error: "+e1.getMessage());
+                                            builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                }
+                                            });
+                                            builder2.setCancelable(false);
+                                            builder2.create().show();
+                                        }
                                         Toast.makeText(getActivity(), "Registration successful!", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getActivity(), MainActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -478,15 +517,15 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                         }
                         else
                         {
-                            if(dialog.isShowing())
-                            {
+                            if(dialog.isShowing()) {
                                 dialog.dismiss();
+                            }
 /*
                                 Toast.makeText(getContext(), "Bad internet connection. Registration failed. Please try submitting again", Toast.LENGTH_SHORT).show();
 */
                                 AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity());
                                 builder2.setTitle("Error");
-                                builder2.setMessage("Bad internet connection! Registration unsuccessful. Please check internet connection and try submitting again");
+                                builder2.setMessage("Bad internet connection! Registration unsuccessful. Please check internet connection and try submitting again. Error: "+e.getMessage());
                                 builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -495,7 +534,6 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                                 });
                                 builder2.setCancelable(false);
                                 builder2.create().show();
-                            }
                             e.printStackTrace();
                             Log.v("test","Registration stage 1 failed "+e.getMessage());
                         }
@@ -508,7 +546,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                 {
                     dialog.dismiss();
                 }
-                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Registration unsuccessful. Try again. Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
         else{
