@@ -11,6 +11,6 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="phone_number">Phone Number</string>
     <string name="action_settings">Settings</string>
-    <string name="version">2.0</string>
-    <string name="releaseDate">16th March 2016</string>
+    <string name="version">3.0</string>
+    <string name="releaseDate">17th March 2016</string>
 </resources>

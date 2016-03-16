@@ -621,8 +621,15 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Error");
-                builder.setMessage("Bad internet! Check your connection and try again");
-                builder.setPositiveButton(android.R.string.ok, null);
+                builder.setMessage("Bad internet! Check your connection and re-register");
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                });
                 builder.setCancelable(false);
                 builder.create().show();
             }

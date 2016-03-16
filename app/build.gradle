@@ -7,10 +7,10 @@ android {
 
     defaultConfig {
         applicationId "com.msrit.abhilash.udbhavinsights"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 23
-        versionCode 2
-        versionName "2.0"
+        versionCode 3
+        versionName "3.0"
     }
     buildTypes {
         release {
