@@ -206,7 +206,6 @@ public class register extends AppCompatActivity {
     }
     private void goToLogin() {
         // Let's go to the MainActivity
-
         Intent intent = new Intent(register.this, Login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

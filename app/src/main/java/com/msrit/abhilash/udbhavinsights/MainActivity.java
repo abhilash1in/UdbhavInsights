@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     ParseUser user;
     ProgressDialog progress;
     EditText res1,res2,res3,res4;
+    Bundle extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
+        if(getSupportActionBar()!=null)
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -80,13 +82,12 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = getIntent();
             if(intent!=null){
                 Log.v("test","intent received");
+                extras =intent.getExtras();
             }
             else
             {
                 Log.v("test","intent NOT received");
             }
-            Bundle extras =intent.getExtras();
-
             /*JSONObject cls = new JSONObject(intent.getStringExtra("com.parse.Data"));*/
 
 
@@ -123,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
                 {
                     mPager.setCurrentItem(1);
                 }
-                String pushStore = json.getString("alert");
                 Toast.makeText(this, uriString, Toast.LENGTH_LONG).show();
             }
             else {

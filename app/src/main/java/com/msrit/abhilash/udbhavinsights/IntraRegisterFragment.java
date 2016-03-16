@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -39,6 +40,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -64,10 +68,12 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
     ArrayList<Integer> table = new ArrayList<>();
     String na,u,c,p,e;
     ProgressDialog dialog;
+    ProgressDialog dialog2;
     ParseUser pu = ParseUser.getCurrentUser();
     ArrayList<ParseObject> eventsData = new ArrayList<>();
     ArrayList<Integer> mainNameIndex = new ArrayList<>();
     TextView reg_type;
+    JSONObject reg_data;
     /*ArrayList<String> classNamesForArjun = new ArrayList<>();*/
 
     String id;
@@ -285,15 +291,18 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             body.append("<p>Udbhav 2016</p>");
             body.append("</html>");
             String emailBody = body.toString();
-            new sendMail(getContext(),pu.getEmail(),emailBody).execute(email.getText().toString());
+            new sendMail(getActivity(),pu.getEmail(),emailBody).execute(email.getText().toString());
         }
         catch(Exception e)
         {
-            if(dialog.isShowing())
-            {
-                dialog.dismiss();
-            }
-            Toast.makeText(getActivity(), "Registration unsuccessful. Try again. Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+            dismiss(dialog);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Error");
+            builder.setMessage("Registration unsuccessful. Try again. Error: " + e.getMessage());
+            builder.setPositiveButton(android.R.string.ok, null);
+            builder.setCancelable(false);
+            builder.create().show();
         }
     }
 
@@ -306,7 +315,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
 
 
         id= RandomStringUtils.randomAlphanumeric(8).toUpperCase();
-        JSONObject reg_data = new JSONObject();
+        reg_data = new JSONObject();
         JSONArray allevents = new JSONArray();
 
         try {
@@ -318,14 +327,12 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
 
             if(!isValidEmailAddress(e))
             {
-                if(dialog.isShowing())
-                {
-                    dialog.dismiss();
-                }
+                dismiss(dialog);
                 android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
                 builder.setMessage("Invalid email!")
                         .setTitle("Oops!")
-                        .setPositiveButton(android.R.string.ok, null);
+                        .setPositiveButton(android.R.string.ok, null)
+                .setCancelable(false);
                 android.support.v7.app.AlertDialog dialog = builder.create();
                 dialog.show();
                 return;
@@ -340,12 +347,13 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
         }
         catch (JSONException e)
         {
-            if(dialog.isShowing())
-            {
-                dialog.dismiss();
-            }
-
-            Toast.makeText(getActivity(), "Registration unsuccessful. Try again. Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            dismiss(dialog);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Error");
+            builder.setMessage("Registration unsuccessful. Try again. Error: " + e.getMessage());
+            builder.setPositiveButton(android.R.string.ok, null);
+            builder.setCancelable(false);
+            builder.create().show();
             e.printStackTrace();
         }
 
@@ -399,11 +407,13 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
                 }
                 catch (JSONException e1)
                 {
-                    if(dialog.isShowing())
-                    {
-                        dialog.dismiss();
-                    }
-                    Toast.makeText(getActivity(), "Registration unsuccessful. Try again. Error: "+e1.getMessage(), Toast.LENGTH_SHORT).show();
+                    dismiss(dialog);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Error");
+                    builder.setMessage("Registration unsuccessful. Try again. Error: " + e1.getMessage());
+                    builder.setPositiveButton(android.R.string.ok, null);
+                    builder.setCancelable(false);
+                    builder.create().show();
                     e1.printStackTrace();
                 }
             }
@@ -419,35 +429,38 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             /*Log.v("json", reg_data.toString(4));*/
         }catch (JSONException e)
         {
-            if(dialog.isShowing())
-            {
-                dialog.dismiss();
-            }
-            Toast.makeText(getActivity(), "Registration unsuccessful. Try again. Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            dismiss(dialog);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Error");
+            builder.setMessage("Registration unsuccessful. Try again. Error: " + e.getMessage());
+            builder.setPositiveButton(android.R.string.ok, null);
+            builder.setCancelable(false);
+            builder.create().show();
             e.printStackTrace();
         }
 
         if (na.length()>0&&u.length()>0&&c.length()>0&&p.length()>0&&e.length()>0) {
             try
             {
-                upload(reg_data);
+                /*upload(reg_data);*/
+                checkNetwork check = new checkNetwork();
+                check.execute(getActivity());
             }
             catch (Exception e)
             {
-                if(dialog.isShowing())
-                {
-                    Log.v("test","dialog dismissed");
-                    dialog.dismiss();
-                }
-                Toast.makeText(getActivity(), "Registration unsuccessful. Try again. Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+                dismiss(dialog);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Error");
+                builder.setMessage("Registration unsuccessful. Try again. Error: " + e.getMessage());
+                builder.setPositiveButton(android.R.string.ok, null);
+                builder.setCancelable(false);
+                builder.create().show();
             }
         }
         else
         {
-            if(dialog.isShowing())
-            {
-                dialog.dismiss();
-            }
+            dismiss(dialog);
             Toast.makeText(getActivity(), "Please enter all fields", Toast.LENGTH_SHORT).show();
         }
     }
@@ -464,105 +477,158 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
 
     void upload(final JSONObject payload)
     {
-        if(isNetworkAvailable()) {
-            try{
-                ParseObject.saveAllInBackground(eventsData, new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if(e==null){
-                            Log.v("test","Registration stage 1 successful");
-                            final ParseObject testObject = new ParseObject("registration");
-                            testObject.put("reg", payload.toString());
-                            testObject.put("paid",false);
-                            testObject.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    if(dialog.isShowing())
-                                    {
-                                        dialog.dismiss();
+        /*checkNetwork check = new checkNetwork();
+        try
+        {
+            yes = check.execute(getActivity()).get();
+        }
+        catch (Exception e)
+        {
+            dismiss(dialog);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Error");
+            builder.setMessage("Error. Try again \n Error: " + e.getMessage());
+            builder.setPositiveButton(android.R.string.ok, null);
+            builder.setCancelable(false);
+            builder.create().show();
+        }*/
+        /*if(yes) {*/
+        if(!dialog.isShowing())
+            dialog.show();
+        try{
+            ParseObject.saveAllInBackground(eventsData, new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Log.v("test", "Registration stage 1 successful");
+                        final ParseObject testObject = new ParseObject("registration");
+                        testObject.put("reg", payload.toString());
+                        testObject.put("paid", false);
+                        testObject.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                dismiss(dialog);
+                                if (e == null) {
+                                    try {
+                                        dispatchMail();
+                                    } catch (Exception e1) {
+                                        e1.printStackTrace();
+                                        dismiss(dialog);
+                                        AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity());
+                                        builder2.setTitle("Error");
+                                        builder2.setMessage("Bad internet connection! Registration successful but email NOT sent. Please check internet connection and try submitting again. \n \n Error: " + e1.getMessage());
+                                        builder2.setPositiveButton(android.R.string.ok, null);
+                                        builder2.setCancelable(false);
+                                        builder2.create().show();
                                     }
-                                    if (e == null) {
-                                        try
-                                        {
-                                            dispatchMail();
-                                        }
-                                        catch (Exception e1)
-                                        {
-                                            if(dialog.isShowing()) {
-                                                dialog.dismiss();
-                                            }
-
-                                            AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity());
-                                            builder2.setTitle("Error");
-                                            builder2.setMessage("Bad internet connection! Registration successful but email NOT sent. Please check internet connection and try submitting again. Error: "+e1.getMessage());
-                                            builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                }
-                                            });
-                                            builder2.setCancelable(false);
-                                            builder2.create().show();
-                                        }
-                                        Toast.makeText(getActivity(), "Registration successful!", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getActivity(), MainActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
-                                    } else {
-                                        e.printStackTrace();
-                                        Toast.makeText(getActivity(), "Registration stage 2 failed! Please try again", Toast.LENGTH_SHORT).show();
-                                    }
+                                    Toast.makeText(getActivity(), "Registration successful!", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                } else {
+                                    e.printStackTrace();
+                                    Toast.makeText(getActivity(), "Registration stage 2 failed! Please try again", Toast.LENGTH_SHORT).show();
                                 }
-                            });
-                        }
-                        else
-                        {
-                            if(dialog.isShowing()) {
-                                dialog.dismiss();
                             }
+                        });
+                    } else {
+                        dismiss(dialog);
 /*
                                 Toast.makeText(getContext(), "Bad internet connection. Registration failed. Please try submitting again", Toast.LENGTH_SHORT).show();
 */
-                                AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity());
-                                builder2.setTitle("Error");
-                                builder2.setMessage("Bad internet connection! Registration unsuccessful. Please check internet connection and try submitting again. Error: "+e.getMessage());
-                                builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                    }
-                                });
-                                builder2.setCancelable(false);
-                                builder2.create().show();
-                            e.printStackTrace();
-                            Log.v("test","Registration stage 1 failed "+e.getMessage());
-                        }
+                        AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity());
+                        builder2.setTitle("Error");
+                        builder2.setMessage("Bad internet connection! Registration unsuccessful. Please check internet connection and try submitting again. \n  Error: " + e.getMessage());
+                        builder2.setPositiveButton(android.R.string.ok, null);
+                        builder2.setCancelable(false);
+                        builder2.create().show();
+                        e.printStackTrace();
+                        Log.v("test", "Registration stage 1 failed. Error: " + e.getMessage());
                     }
-                });
-            }
-            catch (Exception e)
-            {
-                if(dialog.isShowing())
-                {
-                    dialog.dismiss();
                 }
-                Toast.makeText(getActivity(), "Registration unsuccessful. Try again. Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+            });
         }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            dismiss(dialog);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Error");
+            builder.setMessage("Registration unsuccessful. Try again. Error: " + e.getMessage());
+            builder.setPositiveButton(android.R.string.ok, null);
+            builder.setCancelable(false);
+            builder.create().show();
+        }
+        /*}
         else{
-            if(dialog.isShowing())
-            {
-                dialog.dismiss();
-            }
-            Toast.makeText(getActivity(), "No internet connection", Toast.LENGTH_SHORT).show();
-        }
+            dismiss(dialog);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Error");
+            builder.setMessage("Bad internet connection");
+            builder.setPositiveButton(android.R.string.ok, null);
+            builder.setCancelable(false);
+            builder.create().show();
+        }*/
     }
 
-    private boolean isNetworkAvailable() {
+    private boolean isNA() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    /*public boolean isNetworkAvailable(Context c) {
+
+    }*/
+
+    private class checkNetwork extends AsyncTask<Context,Void,Boolean>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dismiss(dialog);
+            dialog2 = new ProgressDialog(getActivity());
+            dialog2.setMessage("Checking internet connection and uploading registration");
+            dialog2.setCancelable(false);
+            dialog2.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Context... params) {
+            if (isNA()) {
+                try {
+                    HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
+                    urlc.setRequestProperty("User-Agent", "Test");
+                    urlc.setRequestProperty("Connection", "close");
+                    urlc.setConnectTimeout(2000);
+                    urlc.connect();
+                    return (urlc.getResponseCode() == 200);
+                } catch (IOException e) {
+                    Log.e("test", "Error checking internet connection", e);
+                }
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            dismiss(dialog2);
+            if(aBoolean)
+            {
+                upload(reg_data);
+            }
+            else
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Error");
+                builder.setMessage("Bad internet! Check your connection and try again");
+                builder.setPositiveButton(android.R.string.ok, null);
+                builder.setCancelable(false);
+                builder.create().show();
+            }
+        }
     }
 
     public boolean isValidEmailAddress(String email) {
@@ -571,8 +637,18 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             InternetAddress emailAddr = new InternetAddress(email);
             emailAddr.validate();
         } catch (AddressException ex) {
+            ex.printStackTrace();
             result = false;
         }
         return result;
+    }
+
+    public void dismiss(ProgressDialog d)
+    {
+        if(d.isShowing())
+        {
+            d.dismiss();
+            Log.v("test", "dialog dismissed");
+        }
     }
 }

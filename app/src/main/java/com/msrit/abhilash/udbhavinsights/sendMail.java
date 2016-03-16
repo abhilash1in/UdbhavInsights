@@ -14,6 +14,10 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -57,20 +61,22 @@ public class sendMail extends AsyncTask<String,Void, ClientResponse>{
                 }
                 catch (Exception e)
                 {
-                    try{
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
                         builder.setTitle("Error");
-                        builder.setMessage("Bad internet connection! Registration successful but email NOT sent! Error: "+e.getMessage());
+                        builder.setMessage("Bad internet connection! Registration successful but email NOT sent! \n \n Contact co-ordinators asap!!!  Error: "+e.getMessage());
+                        builder.setPositiveButton(android.R.string.ok, null);
+                        builder.setCancelable(false);
                         builder.create().show();
-                    }
-                    catch(Exception e1)
-                    {
-                        Log.v("test inner",e1.getMessage());
-                    }
                 }
             }
             else
             {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Error");
+                builder.setMessage("Bad internet connection");
+                builder.setPositiveButton(android.R.string.ok, null);
+                builder.setCancelable(false);
+                builder.create().show();
                 Log.v("test","no internet for email");
             }
         return null;
@@ -80,8 +86,6 @@ public class sendMail extends AsyncTask<String,Void, ClientResponse>{
     @Override
     protected void onPostExecute(ClientResponse clientResponse) {
         super.onPostExecute(clientResponse);
-
-
         if(clientResponse==null)
         {
             return;
