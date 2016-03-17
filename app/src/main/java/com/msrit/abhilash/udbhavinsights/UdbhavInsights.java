@@ -19,7 +19,7 @@ public class UdbhavInsights extends android.app.Application {
 
         //This will only be called once in your app's entire lifecycle.
         Parse.enableLocalDatastore(getApplicationContext());
-        Parse.initialize(this, "m3KC4rEr5BIXw0UjFvYhra91AOgXMxLI32mHAYtS\n", "ZrTRK7DzugxW3N2J1U63HqX3NNR3xgqHFz4DMcd2");
+        Parse.initialize(this, "m3KC4rEr5BIXw0UjFvYhra91AOgXMxLI32mHAYtS", "ZrTRK7DzugxW3N2J1U63HqX3NNR3xgqHFz4DMcd2");
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
 

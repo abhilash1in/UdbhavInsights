@@ -74,7 +74,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
     ArrayList<Integer> mainNameIndex = new ArrayList<>();
     TextView reg_type;
     JSONObject reg_data;
-    /*ArrayList<String> classNamesForArjun = new ArrayList<>();*/
+    ArrayList<String> classNamesForArjun = new ArrayList<>();
 
     String id;
 
@@ -363,7 +363,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             {
                 String className = allcbs.get(i).getText().toString();
                 className = className.replaceAll("[^A-Za-z0-9]","");
-                /*classNamesForArjun.add(className);*/
+                classNamesForArjun.add(className);
                 ParseObject object = new ParseObject(className);
                 JSONObject one_event = new JSONObject();
                 JSONArray names = new JSONArray();
@@ -419,7 +419,7 @@ public class IntraRegisterFragment extends android.support.v4.app.Fragment {
             }
         }
 
-        /*Log.v("testarjun",classNamesForArjun.toString());*/
+        Log.v("testarjun",classNamesForArjun.toString());
 
 
         try{
